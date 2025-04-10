@@ -1,0 +1,283 @@
+###############################################################################
+#                                                                             #
+#                        PRODUCTION-GRADE GITIGNORE                           #
+#                 COMPREHENSIVE EXCLUSION CONFIGURATION                       #
+#                                                                             #
+###############################################################################
+
+# ┌─────────────────────────────────────────────────────────────────┐
+# │                    ENVIRONMENT & SECRETS                         │
+# └─────────────────────────────────────────────────────────────────┘
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+*.env.json
+.vercel
+.netlify
+
+# API keys and credentials
+**/credentials.json
+**/service-account*.json
+**/*.pem
+**/*.key
+**/*.cert
+**/*.crt
+
+# ┌─────────────────────────────────────────────────────────────────┐
+# │                    DEPENDENCY MANAGEMENT                         │
+# └─────────────────────────────────────────────────────────────────┘
+
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Python dependencies
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+venv/
+ENV/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ┌─────────────────────────────────────────────────────────────────┐
+# │                    BUILD ARTIFACTS                               │
+# └─────────────────────────────────────────────────────────────────┘
+
+# Next.js build output
+.next/
+out/
+next-env.d.ts
+
+# TypeScript build artifacts
+*.tsbuildinfo
+
+# Compiled output
+dist/
+build/
+public/build/
+storybook-static/
+
+# Bundle analyzer outputs
+analyze/
+.analyze/
+bundle-stats/
+
+# ┌─────────────────────────────────────────────────────────────────┐
+# │                    TESTING & COVERAGE                            │
+# └─────────────────────────────────────────────────────────────────┘
+
+# Test coverage reports
+coverage/
+.coverage
+.nyc_output
+coverage.json
+coverage.xml
+*.lcov
+.coveralls.yml
+
+# Test artifacts
+.jest-cache/
+.jest-test-results.json
+cypress/videos/
+cypress/screenshots/
+playwright-report/
+test-results/
+test-report.xml
+junit.xml
+
+# ┌─────────────────────────────────────────────────────────────────┐
+# │                    LOGS & DEBUGGING                              │
+# └─────────────────────────────────────────────────────────────────┘
+
+# Log files
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Debug artifacts
+.debug/
+debug.log
+debug/
+.chrome/
+.vscode-test/
+
+# ┌─────────────────────────────────────────────────────────────────┐
+# │                    IDE & EDITOR FILES                            │
+# └─────────────────────────────────────────────────────────────────┘
+
+# VSCode (except for project-specific settings)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.iws
+*.ipr
+.idea_modules/
+out/
+atlassian-ide-plugin.xml
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+Session.vim
+Sessionx.vim
+.netrwhist
+*~
+
+# ┌─────────────────────────────────────────────────────────────────┐
+# │                    OPERATING SYSTEM FILES                        │
+# └─────────────────────────────────────────────────────────────────┘
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ┌─────────────────────────────────────────────────────────────────┐
+# │                    DATABASE & STORAGE                            │
+# └─────────────────────────────────────────────────────────────────┘
+
+# Local databases
+*.sqlite
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
+
+# Local storage
+.local-storage/
+.localStorage/
+.tmp/
+tmp/
+temp/
+
+# ┌─────────────────────────────────────────────────────────────────┐
+# │                    PACKAGE MANAGERS                              │
+# └─────────────────────────────────────────────────────────────────┘
+
+# npm
+.npmrc
+
+# Yarn
+.yarnrc
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# ┌─────────────────────────────────────────────────────────────────┐
+# │                    MISCELLANEOUS                                 │
+# └─────────────────────────────────────────────────────────────────┘
+
+# Generated files
+generated/
+*.generated.*
+
+# Cache directories
+.cache/
+.eslintcache
+.stylelintcache
+.prettiercache
+.parcel-cache
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+*.swp
+
+# ┌─────────────────────────────────────────────────────────────────┐
+# │                    PROJECT-SPECIFIC EXCLUSIONS                   │
+# └─────────────────────────────────────────────────────────────────┘
+
+# Supabase
+.supabase/
+
+# ECharts generated files
+echarts-theme-*.js
+
+# Tailwind generated files
+tailwind-generated.css
+
+# Temporary files created during builds
+.temp-*
