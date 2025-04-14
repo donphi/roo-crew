@@ -1,15 +1,45 @@
-# Roo Crew: AI Agent Team Builder
+# Roo Crew: Custom AI Agent Orchestration & Project Milestone Framework for RooCode
 
-This repository provides a framework for creating a comprehensive team of AI agents tailored to your specific project requirements. It allows you to define, configure, and deploy specialized AI agents that work together seamlessly to build and maintain your software project.
+This repository works with the RooCode VS Code extension to create and orchestrate specialized AI agent teams tailored to your specific project requirements. It enables you to define, configure, and deploy custom agents with precise orchestration based on your project configuration, while also generating detailed step-by-step project milestones for each individual agent to achieve your project goals.
+
+The framework creates a structured approach to AI-assisted development by combining:
+1. **Custom Agent Generation**: Create specialized AI agents with specific roles and expertise
+2. **Orchestrated Workflows**: Define how agents collaborate and hand off tasks
+3. **Detailed Milestones**: Generate comprehensive step-by-step plans for project implementation
+4. **Containerized Development**: Ensure consistent environments through Docker-first principles
 
 ## Overview
 
-The Roo Crew framework consists of two main components that work in sequence:
+The Roo Crew framework integrates with RooCode VS Code extension to provide a comprehensive project development system with two main components that work in sequence:
 
-1. **Agent Team Generation**: Using the 🧠 Visionary Recruiter to create a specialized team of AI agents based on your project requirements.
+1. **Agent Team Generation**: Using the `🧠 Visionary Recruiter` to create a specialized team of AI agents based on your project requirements, with each agent having specific expertise, responsibilities, and boundaries.
 
-2. **YAML Workflow Documentation**: Using the 📋 YAML Architect to create detailed step-by-step workflow documentation that assigns tasks to the specific agents created in the first phase.
+   The Visionary Recruiter helps you define your technology stack across multiple categories:
+   - **Project Overview**: Project type, domain, and high-level requirements
+   - **Frontend Technologies**: Framework, UI design system, state management, data visualization
+   - **Backend Technologies**: Primary language, framework, API architecture
+   - **Database & Storage**: Primary database, vector database, caching layer
+   - **AI/ML Components**: LLM provider, embedding model, ML framework
+   - **DevOps & Infrastructure**: Containerization, CI/CD pipeline, deployment target
+   - **Quality Assurance**: Testing frameworks, code quality tools, performance testing
+   - **Monitoring & Observability**: Logging, metrics & tracing
 
+2. **YAML Workflow Documentation**: Using the `📋 YAML Architect` to create detailed step-by-step workflow documentation that assigns tasks to the specific agents created in the first phase.
+
+   The YAML Architect creates comprehensive workflow documentation across five key phases:
+   - **Phase 1: Project Initialization** - Environment setup, repository initialization, architecture scaffolding
+   - **Phase 2: Core Infrastructure Development** - Database schema, authentication, API structure, component libraries
+   - **Phase 3: Feature Development** - Feature implementation, TDD workflow, documentation, code review
+   - **Phase 4: Testing & Quality Assurance** - Unit, integration, E2E, performance, and security testing
+   - **Phase 5: Deployment & Monitoring** - CI/CD pipeline, environments, monitoring, backup procedures
+
+This two-phase approach ensures that the YAML workflow documentation is tailored to your specific agent team, with each task assigned to the most appropriate specialized agent based on their expertise and responsibilities. The result is a highly structured, milestone-driven development process where each agent knows exactly what to do, when to do it, and how it fits into the overall project goals.
+By leveraging the RooCode VS Code extension with this framework, you can:
+- Create custom agent teams with specialized expertise for your specific technology stack
+- Generate detailed project plans with clear milestones and responsibilities
+- Ensure consistent development practices through containerization and standardized workflows
+- Maintain high code quality through test-driven development and comprehensive documentation
+- Orchestrate complex development tasks across multiple specialized agents
 This two-phase approach ensures that the YAML workflow documentation is tailored to your specific agent team, with each task assigned to the most appropriate specialized agent based on their expertise and responsibilities.
 
 ## Getting Started
@@ -28,7 +58,7 @@ This phase focuses on creating your specialized team of AI agents based on your 
 
 1. **Clone this repository**:
    ```bash
-   git clone https://github.com/yourusername/roo-crew.git
+   git clone https://github.com/donphi/roo-crew.git
    cd roo-crew
    ```
 
@@ -135,6 +165,20 @@ The `config/` directory contains example YAML workflow files that demonstrate th
 5. `example_05_deployment_monitoring.yaml`: CI/CD pipeline, environment setup, monitoring, logging, and backup procedures
 
 These files provide a real-world example with detailed steps that demonstrate the level of precision expected from the YAML Architect. Each step is assigned to a specific agent role from the team created by the Visionary Recruiter, ensuring that tasks are handled by the most appropriate specialized agent.
+
+**Workflow Summary**: The five phases create a comprehensive development lifecycle that guides your project from inception to production:
+
+1. **Project Initialization**: Establishes the foundation with proper environment setup, repository structure, and centralized configuration, ensuring all subsequent development follows consistent patterns.
+
+2. **Core Infrastructure**: Builds the essential backend and frontend infrastructure components that will support all features, focusing on database design, authentication, API structure, and reusable components.
+
+3. **Feature Development**: Implements specific features using test-driven development, with clear documentation and code review processes to maintain quality throughout the development cycle.
+
+4. **Testing & Quality Assurance**: Ensures comprehensive testing at all levels (unit, integration, end-to-end, performance, security) to verify the application meets all functional and non-functional requirements.
+
+5. **Deployment & Monitoring**: Establishes automated deployment pipelines, configures production environments, and implements monitoring and backup systems to ensure reliable operation and quick response to issues.
+
+This structured approach ensures that your project progresses methodically through well-defined stages, with clear responsibilities for each specialized agent at every step of the process.
 
 ## Best Practices
 
