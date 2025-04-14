@@ -1,4 +1,4 @@
-# 🤖 Roo Crew: Custom AI Agent Orchestration & Project Milestone Framework for RooCode
+# 🤖 Roo Crew: Custom AI Agent & Project Milestone Framework
 
 This repository works with the RooCode VS Code extension to create and orchestrate specialized AI agent teams tailored to your specific project requirements. It enables you to define, configure, and deploy custom agents with precise orchestration based on your project configuration, while also generating detailed step-by-step project milestones for each individual agent to achieve your project goals.
 
