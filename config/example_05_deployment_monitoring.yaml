@@ -1,0 +1,674 @@
+# Deployment & Monitoring Workflow - config/05_deployment_monitoring.yaml
+# This file documents the steps for deploying the application and setting up monitoring systems
+
+project_metadata:
+  name: "Sales Analytics Dashboard"
+  description: "A responsive web application with comprehensive data visualization capabilities for sales analytics"
+  project_type: "Minimum Viable Product (MVP)"
+  
+  # From user-provided project scope
+  problem_statement: "Sales managers lack real-time visibility into team performance and sales trends"
+  target_users: "Sales managers, executives, and sales representatives"
+  key_features:
+    - "Real-time sales data visualization with filtering capabilities"
+    - "Team performance comparisons and historical trend analysis"
+    - "Customizable dashboards for different user roles"
+    - "Automated sales forecasting using historical data"
+    - "Export capabilities for reports and presentations"
+  success_criteria:
+    - "Dashboard loads in under 2 seconds even with large datasets"
+    - "All visualizations update in real-time as data changes"
+    - "Users can create and save custom views of the data"
+    - "System handles at least 500 concurrent users"
+    - "Data is refreshed from source systems every 5 minutes"
+  
+  # From recruitment_prompt technology selections
+  primary_language: "TypeScript"
+  frontend_framework: "Next.js"
+  styling_framework: "Tailwind CSS"
+  data_visualization: "Apache ECharts"
+  backend_framework: "NestJS"
+  database: "PostgreSQL"
+  containerization: "Docker"
+  ci_cd_pipeline: "GitHub Actions"
+
+workflow:
+  phase: 5  # Deployment & Monitoring
+  estimated_duration: "5 days"
+  
+  steps:
+    - id: "DEVOPS-005"
+      status_marker: "[ ]"  # Not started
+      name: "CI/CD Pipeline Implementation"
+      description: "Implement a comprehensive CI/CD pipeline using GitHub Actions to automate testing, building, and deployment processes. This ensures consistent and reliable delivery of the application."
+      status: "not_started"
+      error_details: ""
+      phase: 5
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The DevOps Engineer has expertise in CI/CD pipeline configuration and automation using GitHub Actions."
+      
+      assigned_to: "devops-engineer"
+      estimated_time: "16 hours"
+      
+      technology_stack:
+        primary_language: "YAML"
+        frameworks: []
+        tools: ["GitHub Actions", "Docker", "Docker Compose"]
+      
+      prerequisites:
+        environment:
+          - "GitHub repository must be properly configured"
+          - "Docker images must be buildable from Dockerfiles"
+          - "Test suites must be runnable via npm scripts"
+        knowledge:
+          - "Understanding of GitHub Actions workflow syntax"
+          - "Familiarity with CI/CD principles and practices"
+          - "Knowledge of Docker image building and publishing"
+        resources:
+          - "GitHub repository access credentials"
+          - "Deployment environment access credentials"
+        dependencies:
+          - "TEST-005"  # Security Testing Implementation (from Phase 4)
+      
+      development_approach:
+        tdd_required: false
+        pair_programming: false
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "CI pipeline must run on all pull requests and pushes to main branch"
+        - "CD pipeline must only deploy from the main branch after approval"
+        - "All tests must pass before deployment is allowed"
+        - "Docker images must be built and tagged with appropriate versions"
+        - "Secrets must be stored securely in GitHub repository settings"
+      
+      validation:
+        criteria:
+          - "CI pipeline runs successfully on pull requests"
+          - "CD pipeline deploys application to staging environment"
+          - "Docker images are built and published correctly"
+          - "Deployment process is fully automated"
+        commands:
+          - "docker-compose exec devops-tools gh workflow run ci.yml"
+          - "docker-compose exec devops-tools gh workflow run cd.yml"
+          - "docker-compose exec devops-tools gh run list"
+      
+      error_handling:
+        potential_errors:
+          - error: "CI workflow failure"
+            detection: "GitHub Actions reports workflow failure"
+            resolution: "Review workflow logs, fix failing tests or build issues"
+          - error: "Docker build failure"
+            detection: "Error during Docker image building step"
+            resolution: "Verify Dockerfile syntax, check build context, fix dependencies"
+          - error: "Deployment failure"
+            detection: "Application fails to deploy to target environment"
+            resolution: "Check deployment logs, verify environment configuration, fix access issues"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "DEVOPS-005.1"
+          status_marker: "[ ]"  # Not started
+          name: "Continuous Integration Workflow"
+          description: "Create GitHub Actions workflow for continuous integration to run tests and build Docker images."
+          status: "not_started"
+          phase: 5
+          assigned_to: "devops-engineer"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "CI workflow file is created in .github/workflows/"
+              - "Workflow runs tests for frontend and backend"
+              - "Workflow builds Docker images for all components"
+            commands:
+              - "docker-compose exec devops-tools cat .github/workflows/ci.yml"
+              - "docker-compose exec devops-tools gh workflow run ci.yml"
+        
+        - id: "DEVOPS-005.2"
+          status_marker: "[ ]"  # Not started
+          name: "Continuous Deployment Workflow"
+          description: "Create GitHub Actions workflow for continuous deployment to staging and production environments."
+          status: "not_started"
+          phase: 5
+          assigned_to: "devops-engineer"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "CD workflow file is created in .github/workflows/"
+              - "Workflow deploys to staging automatically"
+              - "Workflow deploys to production after approval"
+            commands:
+              - "docker-compose exec devops-tools cat .github/workflows/cd.yml"
+              - "docker-compose exec devops-tools gh workflow run cd.yml"
+        
+        - id: "DEVOPS-005.3"
+          status_marker: "[ ]"  # Not started
+          name: "Docker Image Publishing"
+          description: "Configure workflow to build, tag, and publish Docker images to a container registry."
+          status: "not_started"
+          phase: 5
+          assigned_to: "devops-engineer"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Docker images are built with appropriate tags"
+              - "Images are published to container registry"
+              - "Image versions are tracked and managed"
+            commands:
+              - "docker-compose exec devops-tools docker image ls"
+              - "docker-compose exec devops-tools docker push project-name:latest"
+
+    - id: "DEVOPS-006"
+      status_marker: "[ ]"  # Not started
+      name: "Environment Setup"
+      description: "Set up and configure staging and production environments for the application. This includes infrastructure provisioning, network configuration, and security settings."
+      status: "not_started"
+      error_details: ""
+      phase: 5
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The DevOps Engineer has expertise in environment configuration and infrastructure management."
+      
+      assigned_to: "devops-engineer"
+      estimated_time: "20 hours"
+      
+      technology_stack:
+        primary_language: "YAML/HCL"
+        frameworks: []
+        tools: ["Docker", "Docker Compose", "Terraform", "AWS/Azure/GCP"]
+      
+      prerequisites:
+        environment:
+          - "Cloud provider account must be configured"
+          - "Infrastructure as Code tools must be installed"
+          - "Network and security requirements must be defined"
+        knowledge:
+          - "Understanding of cloud infrastructure services"
+          - "Familiarity with Terraform or equivalent IaC tools"
+          - "Knowledge of networking and security best practices"
+        resources:
+          - "Cloud provider access credentials"
+          - "Infrastructure requirements documentation"
+        dependencies:
+          - "DEVOPS-005"  # CI/CD Pipeline Implementation
+      
+      development_approach:
+        tdd_required: false
+        pair_programming: false
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "All infrastructure must be defined as code"
+        - "Environments must be isolated and secure"
+        - "Configuration must be externalized and environment-specific"
+        - "Secrets must be managed securely"
+        - "Infrastructure must be scalable and resilient"
+      
+      validation:
+        criteria:
+          - "Staging environment is provisioned and accessible"
+          - "Production environment is provisioned and accessible"
+          - "Application deploys successfully to both environments"
+          - "Environment-specific configuration works correctly"
+        commands:
+          - "docker-compose exec devops-tools terraform validate"
+          - "docker-compose exec devops-tools terraform plan"
+          - "docker-compose exec devops-tools terraform apply -auto-approve"
+          - "docker-compose exec devops-tools curl https://staging-api.example.com/health"
+      
+      error_handling:
+        potential_errors:
+          - error: "Infrastructure provisioning failure"
+            detection: "Terraform reports errors during apply"
+            resolution: "Review error messages, fix configuration, retry provisioning"
+          - error: "Network connectivity issues"
+            detection: "Services cannot communicate with each other"
+            resolution: "Verify network configuration, security groups, and firewall rules"
+          - error: "Configuration errors"
+            detection: "Application fails to start with configuration errors"
+            resolution: "Verify environment variables and configuration files"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "DEVOPS-006.1"
+          status_marker: "[ ]"  # Not started
+          name: "Infrastructure as Code Implementation"
+          description: "Create Terraform configuration for provisioning cloud infrastructure."
+          status: "not_started"
+          phase: 5
+          assigned_to: "devops-engineer"
+          estimated_time: "8 hours"
+          validation:
+            criteria:
+              - "Terraform configuration files are created"
+              - "Infrastructure can be provisioned automatically"
+              - "State is managed properly"
+            commands:
+              - "docker-compose exec devops-tools terraform validate"
+              - "docker-compose exec devops-tools terraform plan"
+        
+        - id: "DEVOPS-006.2"
+          status_marker: "[ ]"  # Not started
+          name: "Staging Environment Setup"
+          description: "Provision and configure the staging environment for testing and validation."
+          status: "not_started"
+          phase: 5
+          assigned_to: "devops-engineer"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Staging environment is provisioned"
+              - "Application deploys successfully to staging"
+              - "Environment-specific configuration works correctly"
+            commands:
+              - "docker-compose exec devops-tools terraform apply -var environment=staging -auto-approve"
+              - "docker-compose exec devops-tools curl https://staging-api.example.com/health"
+        
+        - id: "DEVOPS-006.3"
+          status_marker: "[ ]"  # Not started
+          name: "Production Environment Setup"
+          description: "Provision and configure the production environment for the live application."
+          status: "not_started"
+          phase: 5
+          assigned_to: "devops-engineer"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Production environment is provisioned"
+              - "Application can be deployed to production"
+              - "Production-specific configuration works correctly"
+            commands:
+              - "docker-compose exec devops-tools terraform apply -var environment=production -auto-approve"
+              - "docker-compose exec devops-tools curl https://api.example.com/health"
+
+    - id: "DEVOPS-007"
+      status_marker: "[ ]"  # Not started
+      name: "Monitoring and Logging Implementation"
+      description: "Implement comprehensive monitoring and logging systems to track application health, performance, and user behavior. This enables proactive issue detection and resolution."
+      status: "not_started"
+      error_details: ""
+      phase: 5
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The DevOps Engineer has expertise in monitoring and logging systems implementation and configuration."
+      
+      assigned_to: "devops-engineer"
+      estimated_time: "16 hours"
+      
+      technology_stack:
+        primary_language: "YAML/JSON"
+        frameworks: []
+        tools: ["Prometheus", "Grafana", "ELK Stack", "Docker"]
+      
+      prerequisites:
+        environment:
+          - "Application must be deployed to target environments"
+          - "Monitoring infrastructure must be provisioned"
+          - "Network access must be configured for metrics collection"
+        knowledge:
+          - "Understanding of monitoring and alerting concepts"
+          - "Familiarity with Prometheus and Grafana"
+          - "Knowledge of ELK Stack for logging"
+        resources:
+          - "Monitoring requirements documentation"
+          - "Access to monitoring infrastructure"
+        dependencies:
+          - "DEVOPS-006"  # Environment Setup
+      
+      development_approach:
+        tdd_required: false
+        pair_programming: false
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "All components must expose relevant metrics"
+        - "Logs must be centralized and searchable"
+        - "Alerts must be configured for critical conditions"
+        - "Dashboards must provide comprehensive visibility"
+        - "Monitoring must have minimal performance impact"
+      
+      validation:
+        criteria:
+          - "Metrics are collected from all components"
+          - "Logs are centralized and searchable"
+          - "Alerts trigger on simulated issues"
+          - "Dashboards display relevant information"
+        commands:
+          - "docker-compose exec monitoring curl http://prometheus:9090/-/healthy"
+          - "docker-compose exec monitoring curl http://grafana:3000/api/health"
+          - "docker-compose exec monitoring curl -X POST http://alertmanager:9093/api/v1/alerts"
+          - "docker-compose exec logging curl http://elasticsearch:9200/_cluster/health"
+      
+      error_handling:
+        potential_errors:
+          - error: "Metrics collection failure"
+            detection: "Prometheus reports scrape failures"
+            resolution: "Verify endpoint accessibility, authentication, and metric format"
+          - error: "Log ingestion issues"
+            detection: "Logs not appearing in Elasticsearch"
+            resolution: "Check log shipping configuration, verify network connectivity"
+          - error: "Alert configuration errors"
+            detection: "Alerts not triggering when conditions are met"
+            resolution: "Review alert rules, verify alerting pipeline"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "DEVOPS-007.1"
+          status_marker: "[ ]"  # Not started
+          name: "Metrics Collection Setup"
+          description: "Configure Prometheus for collecting metrics from all application components."
+          status: "not_started"
+          phase: 5
+          assigned_to: "devops-engineer"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Prometheus is configured and running"
+              - "Metrics are collected from all components"
+              - "Custom metrics are defined and collected"
+            commands:
+              - "docker-compose exec monitoring curl http://prometheus:9090/-/healthy"
+              - "docker-compose exec monitoring curl http://prometheus:9090/api/v1/targets"
+        
+        - id: "DEVOPS-007.2"
+          status_marker: "[ ]"  # Not started
+          name: "Logging Infrastructure Setup"
+          description: "Configure ELK Stack for centralized logging from all application components."
+          status: "not_started"
+          phase: 5
+          assigned_to: "devops-engineer"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Elasticsearch, Logstash, and Kibana are running"
+              - "Logs are collected from all components"
+              - "Log indices are properly configured"
+            commands:
+              - "docker-compose exec logging curl http://elasticsearch:9200/_cluster/health"
+              - "docker-compose exec logging curl http://kibana:5601/api/status"
+        
+        - id: "DEVOPS-007.3"
+          status_marker: "[ ]"  # Not started
+          name: "Dashboard and Alerting Setup"
+          description: "Configure Grafana dashboards and alerting rules for monitoring application health."
+          status: "not_started"
+          phase: 5
+          assigned_to: "devops-engineer"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Grafana dashboards are created for key metrics"
+              - "Alert rules are defined for critical conditions"
+              - "Notification channels are configured"
+            commands:
+              - "docker-compose exec monitoring curl http://grafana:3000/api/health"
+              - "docker-compose exec monitoring curl http://alertmanager:9093/-/healthy"
+
+    - id: "DEVOPS-008"
+      status_marker: "[ ]"  # Not started
+      name: "Backup and Disaster Recovery Implementation"
+      description: "Implement backup and disaster recovery procedures to ensure data durability and system resilience. This includes database backups, configuration backups, and recovery testing."
+      status: "not_started"
+      error_details: ""
+      phase: 5
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The DevOps Engineer has expertise in backup strategies and disaster recovery planning."
+      
+      assigned_to: "devops-engineer"
+      estimated_time: "12 hours"
+      
+      technology_stack:
+        primary_language: "Shell/YAML"
+        frameworks: []
+        tools: ["Docker", "PostgreSQL", "AWS S3/Azure Blob/GCP Storage"]
+      
+      prerequisites:
+        environment:
+          - "Production environment must be fully configured"
+          - "Database must be accessible for backup operations"
+          - "Storage service must be configured for backup storage"
+        knowledge:
+          - "Understanding of database backup and recovery procedures"
+          - "Familiarity with cloud storage services"
+          - "Knowledge of disaster recovery principles"
+        resources:
+          - "Backup and recovery requirements documentation"
+          - "Access to backup storage services"
+        dependencies:
+          - "DEVOPS-007"  # Monitoring and Logging Implementation
+      
+      development_approach:
+        tdd_required: false
+        pair_programming: false
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "Backups must be automated and scheduled regularly"
+        - "Backup data must be encrypted at rest and in transit"
+        - "Recovery procedures must be documented and tested"
+        - "Backup retention policy must be implemented"
+        - "Backup success/failure must be monitored and alerted"
+      
+      validation:
+        criteria:
+          - "Database backups are created successfully"
+          - "Backups are stored securely in designated location"
+          - "Recovery from backup works as expected"
+          - "Backup monitoring and alerting functions correctly"
+        commands:
+          - "docker-compose exec backup-tools ./backup.sh"
+          - "docker-compose exec backup-tools ./verify-backup.sh"
+          - "docker-compose exec backup-tools ./test-restore.sh"
+          - "docker-compose exec backup-tools ./list-backups.sh"
+      
+      error_handling:
+        potential_errors:
+          - error: "Backup process failure"
+            detection: "Backup script exits with non-zero status"
+            resolution: "Check database connectivity, storage access, and disk space"
+          - error: "Backup storage issues"
+            detection: "Cannot write to backup storage location"
+            resolution: "Verify credentials, permissions, and network connectivity"
+          - error: "Restore process failure"
+            detection: "Restore script fails to recover data"
+            resolution: "Verify backup integrity, database configuration, and restore procedure"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "DEVOPS-008.1"
+          status_marker: "[ ]"  # Not started
+          name: "Database Backup Implementation"
+          description: "Create automated scripts for regular database backups."
+          status: "not_started"
+          phase: 5
+          assigned_to: "devops-engineer"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Backup scripts are created and functional"
+              - "Backups are scheduled at appropriate intervals"
+              - "Backup data is verified for integrity"
+            commands:
+              - "docker-compose exec backup-tools cat backup.sh"
+              - "docker-compose exec backup-tools ./backup.sh"
+              - "docker-compose exec backup-tools crontab -l"
+        
+        - id: "DEVOPS-008.2"
+          status_marker: "[ ]"  # Not started
+          name: "Backup Storage Configuration"
+          description: "Configure secure storage for backups with appropriate retention policies."
+          status: "not_started"
+          phase: 5
+          assigned_to: "devops-engineer"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Backup storage is configured and accessible"
+              - "Encryption is enabled for backup data"
+              - "Retention policy is implemented"
+            commands:
+              - "docker-compose exec backup-tools ./test-storage-access.sh"
+              - "docker-compose exec backup-tools ./verify-encryption.sh"
+              - "docker-compose exec backup-tools ./list-backups.sh"
+        
+        - id: "DEVOPS-008.3"
+          status_marker: "[ ]"  # Not started
+          name: "Disaster Recovery Testing"
+          description: "Create and test procedures for recovering from various failure scenarios."
+          status: "not_started"
+          phase: 5
+          assigned_to: "devops-engineer"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Recovery procedures are documented"
+              - "Database can be restored from backup"
+              - "Application can be fully recovered after simulated disaster"
+            commands:
+              - "docker-compose exec backup-tools cat disaster-recovery.md"
+              - "docker-compose exec backup-tools ./test-restore.sh"
+              - "docker-compose exec backup-tools ./simulate-recovery.sh"
+
+    - id: "DOC-001"
+      status_marker: "[ ]"  # Not started
+      name: "Deployment and Operations Documentation"
+      description: "Create comprehensive documentation for deployment, operations, and maintenance procedures. This ensures the application can be effectively managed throughout its lifecycle."
+      status: "not_started"
+      error_details: ""
+      phase: 5
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The Documentation Scribe specializes in creating clear, accurate, and comprehensive technical documentation."
+      
+      assigned_to: "documentation-scribe"
+      estimated_time: "16 hours"
+      
+      technology_stack:
+        primary_language: "Markdown"
+        frameworks: []
+        tools: ["Git", "GitHub"]
+      
+      prerequisites:
+        environment:
+          - "All deployment and monitoring systems must be implemented"
+          - "Application must be deployed to production environment"
+        knowledge:
+          - "Understanding of the complete application architecture"
+          - "Familiarity with deployment and monitoring procedures"
+          - "Knowledge of documentation best practices"
+        resources:
+          - "Access to all project repositories and environments"
+          - "Existing technical documentation"
+        dependencies:
+          - "DEVOPS-008"  # Backup and Disaster Recovery Implementation
+      
+      development_approach:
+        tdd_required: false
+        pair_programming: false
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "Documentation must be comprehensive and accurate"
+        - "Documentation must be organized logically and consistently"
+        - "Technical procedures must include step-by-step instructions"
+        - "Documentation must be version-controlled with the codebase"
+        - "Documentation must be accessible to all relevant stakeholders"
+      
+      validation:
+        criteria:
+          - "Deployment documentation is complete and accurate"
+          - "Operations procedures are clearly documented"
+          - "Troubleshooting guides are comprehensive"
+          - "Documentation is reviewed and approved by team members"
+        commands:
+          - "docker-compose exec docs-tools ls -la docs/deployment/"
+          - "docker-compose exec docs-tools ls -la docs/operations/"
+          - "docker-compose exec docs-tools ls -la docs/maintenance/"
+          - "docker-compose exec docs-tools markdownlint docs/"
+      
+      error_handling:
+        potential_errors:
+          - error: "Documentation gaps"
+            detection: "Review identifies missing information"
+            resolution: "Collaborate with relevant team members to fill gaps"
+          - error: "Inaccurate procedures"
+            detection: "Testing reveals documentation doesn't match actual procedures"
+            resolution: "Update documentation to reflect actual procedures"
+          - error: "Formatting issues"
+            detection: "Markdown linting reports errors"
+            resolution: "Fix formatting according to style guidelines"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "DOC-001.1"
+          status_marker: "[ ]"  # Not started
+          name: "Deployment Documentation"
+          description: "Create documentation for deploying the application to various environments."
+          status: "not_started"
+          phase: 5
+          assigned_to: "documentation-scribe"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Deployment prerequisites are documented"
+              - "Step-by-step deployment procedures are provided"
+              - "Environment-specific configurations are documented"
+            commands:
+              - "docker-compose exec docs-tools cat docs/deployment/README.md"
+              - "docker-compose exec docs-tools markdownlint docs/deployment/"
+        
+        - id: "DOC-001.2"
+          status_marker: "[ ]"  # Not started
+          name: "Operations Documentation"
+          description: "Create documentation for day-to-day operations and monitoring."
+          status: "not_started"
+          phase: 5
+          assigned_to: "documentation-scribe"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Monitoring procedures are documented"
+              - "Common operational tasks are described"
+              - "Alert response procedures are provided"
+            commands:
+              - "docker-compose exec docs-tools cat docs/operations/README.md"
+              - "docker-compose exec docs-tools markdownlint docs/operations/"
+        
+        - id: "DOC-001.3"
+          status_marker: "[ ]"  # Not started
+          name: "Maintenance and Troubleshooting Documentation"
+          description: "Create documentation for maintenance procedures and troubleshooting common issues."
+          status: "not_started"
+          phase: 5
+          assigned_to: "documentation-scribe"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Maintenance procedures are documented"
+              - "Troubleshooting guides for common issues are provided"
+              - "Disaster recovery procedures are documented"
+            commands:
+              - "docker-compose exec docs-tools cat docs/maintenance/README.md"
+              - "docker-compose exec docs-tools markdownlint docs/maintenance/"

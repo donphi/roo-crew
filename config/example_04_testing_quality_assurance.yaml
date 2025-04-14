@@ -1,0 +1,670 @@
+# Testing & Quality Assurance Workflow - config/04_testing_quality_assurance.yaml
+# This file documents the steps for comprehensive testing and quality assurance of the project
+
+project_metadata:
+  name: "Sales Analytics Dashboard"
+  description: "A responsive web application with comprehensive data visualization capabilities for sales analytics"
+  project_type: "Minimum Viable Product (MVP)"
+  
+  # From user-provided project scope
+  problem_statement: "Sales managers lack real-time visibility into team performance and sales trends"
+  target_users: "Sales managers, executives, and sales representatives"
+  key_features:
+    - "Real-time sales data visualization with filtering capabilities"
+    - "Team performance comparisons and historical trend analysis"
+    - "Customizable dashboards for different user roles"
+    - "Automated sales forecasting using historical data"
+    - "Export capabilities for reports and presentations"
+  success_criteria:
+    - "Dashboard loads in under 2 seconds even with large datasets"
+    - "All visualizations update in real-time as data changes"
+    - "Users can create and save custom views of the data"
+    - "System handles at least 500 concurrent users"
+    - "Data is refreshed from source systems every 5 minutes"
+  
+  # From recruitment_prompt technology selections
+  primary_language: "TypeScript"
+  frontend_framework: "Next.js"
+  styling_framework: "Tailwind CSS"
+  data_visualization: "Apache ECharts"
+  backend_framework: "NestJS"
+  database: "PostgreSQL"
+  containerization: "Docker"
+  ci_cd_pipeline: "GitHub Actions"
+
+workflow:
+  phase: 4  # Testing & Quality Assurance
+  estimated_duration: "7 days"
+  
+  steps:
+    - id: "TEST-001"
+      status_marker: "[ ]"  # Not started
+      name: "Unit Testing Implementation"
+      description: "Implement comprehensive unit tests for all components, services, and utilities across the application. This ensures individual parts of the system function correctly in isolation."
+      status: "not_started"
+      error_details: ""
+      phase: 4
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The TDD Task Force specializes in implementing test-driven development practices and ensuring comprehensive test coverage."
+      
+      assigned_to: "tdd-task-force"
+      estimated_time: "24 hours"
+      
+      technology_stack:
+        primary_language: "TypeScript"
+        frameworks: ["Jest", "React Testing Library", "NestJS Testing"]
+        tools: ["Docker", "GitHub Actions"]
+      
+      prerequisites:
+        environment:
+          - "Docker containers for frontend and backend must be running"
+          - "Test configuration must be properly set up in both projects"
+        knowledge:
+          - "Understanding of Jest testing framework"
+          - "Familiarity with React Testing Library for component testing"
+          - "Knowledge of NestJS testing utilities"
+        resources:
+          - "Existing codebase with components and services"
+          - "Test coverage requirements documentation"
+        dependencies:
+          - "FRONT-005"  # Custom Dashboard Feature (from Phase 3)
+          - "BACK-002"  # Sales Data Processing Service (from Phase 3)
+      
+      development_approach:
+        tdd_required: true
+        pair_programming: true
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "All tests must be containerized and run within Docker"
+        - "Test coverage must meet minimum threshold of 80%"
+        - "Tests must be isolated and not depend on external services"
+        - "Mock objects must be used for external dependencies"
+        - "Tests must be organized according to the feature-based structure"
+      
+      validation:
+        criteria:
+          - "All unit tests pass successfully"
+          - "Test coverage meets or exceeds 80% threshold"
+          - "Tests run successfully in CI pipeline"
+          - "Test reports are generated correctly"
+        commands:
+          - "docker-compose exec frontend npm run test:unit"
+          - "docker-compose exec backend npm run test:unit"
+          - "docker-compose exec frontend npm run test:coverage"
+          - "docker-compose exec backend npm run test:coverage"
+      
+      error_handling:
+        potential_errors:
+          - error: "Test failures"
+            detection: "Jest reports failing tests"
+            resolution: "Debug failing tests, fix implementation or update tests as needed"
+          - error: "Insufficient test coverage"
+            detection: "Coverage report shows coverage below threshold"
+            resolution: "Identify uncovered code paths and add tests"
+          - error: "Test environment issues"
+            detection: "Tests fail due to environment configuration"
+            resolution: "Verify Docker container configuration and test setup"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "TEST-001.1"
+          status_marker: "[ ]"  # Not started
+          name: "Frontend Component Unit Tests"
+          description: "Implement unit tests for all frontend React components using React Testing Library."
+          status: "not_started"
+          phase: 4
+          assigned_to: "tdd-task-force"
+          estimated_time: "8 hours"
+          validation:
+            criteria:
+              - "All components have corresponding test files"
+              - "Tests verify component rendering and behavior"
+              - "Component tests achieve minimum 80% coverage"
+            commands:
+              - "docker-compose exec frontend npm run test:components"
+              - "docker-compose exec frontend npm run test:coverage -- --collectCoverageFrom='src/components/**/*.{ts,tsx}'"
+        
+        - id: "TEST-001.2"
+          status_marker: "[ ]"  # Not started
+          name: "Frontend Utility Unit Tests"
+          description: "Implement unit tests for frontend utility functions, hooks, and state management."
+          status: "not_started"
+          phase: 4
+          assigned_to: "tdd-task-force"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "All utility functions have corresponding test files"
+              - "Custom hooks are tested for correct behavior"
+              - "State management logic is thoroughly tested"
+            commands:
+              - "docker-compose exec frontend npm run test:utils"
+              - "docker-compose exec frontend npm run test:hooks"
+              - "docker-compose exec frontend npm run test:state"
+        
+        - id: "TEST-001.3"
+          status_marker: "[ ]"  # Not started
+          name: "Backend Service Unit Tests"
+          description: "Implement unit tests for all backend services and providers."
+          status: "not_started"
+          phase: 4
+          assigned_to: "tdd-task-force"
+          estimated_time: "10 hours"
+          validation:
+            criteria:
+              - "All services have corresponding test files"
+              - "Service methods are tested with various inputs"
+              - "Edge cases and error handling are tested"
+            commands:
+              - "docker-compose exec backend npm run test:services"
+              - "docker-compose exec backend npm run test:coverage -- --collectCoverageFrom='src/services/**/*.ts'"
+
+    - id: "TEST-002"
+      status_marker: "[ ]"  # Not started
+      name: "Integration Testing Implementation"
+      description: "Implement integration tests to verify that different parts of the application work together correctly. This includes API endpoint testing, database interactions, and cross-component functionality."
+      status: "not_started"
+      error_details: ""
+      phase: 4
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The TDD Task Force has expertise in designing and implementing integration tests that verify system components work together correctly."
+      
+      assigned_to: "tdd-task-force"
+      estimated_time: "20 hours"
+      
+      technology_stack:
+        primary_language: "TypeScript"
+        frameworks: ["Jest", "Supertest", "NestJS Testing"]
+        tools: ["Docker", "PostgreSQL"]
+      
+      prerequisites:
+        environment:
+          - "Docker containers for frontend, backend, and database must be running"
+          - "Test database must be configured and accessible"
+        knowledge:
+          - "Understanding of API testing methodologies"
+          - "Familiarity with database testing approaches"
+          - "Knowledge of mocking external services"
+        resources:
+          - "API documentation"
+          - "Database schema documentation"
+        dependencies:
+          - "TEST-001"  # Unit Testing Implementation
+      
+      development_approach:
+        tdd_required: true
+        pair_programming: true
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "Integration tests must use isolated test database"
+        - "Tests must clean up after themselves to ensure repeatability"
+        - "API tests must cover all endpoints and response types"
+        - "Database tests must verify data integrity and constraints"
+        - "Tests must be containerized and run within Docker"
+      
+      validation:
+        criteria:
+          - "All integration tests pass successfully"
+          - "API endpoints return expected responses"
+          - "Database operations maintain data integrity"
+          - "Tests run successfully in CI pipeline"
+        commands:
+          - "docker-compose exec backend npm run test:integration"
+          - "docker-compose exec backend npm run test:e2e"
+          - "docker-compose exec frontend npm run test:integration"
+      
+      error_handling:
+        potential_errors:
+          - error: "API test failures"
+            detection: "Supertest reports failing API tests"
+            resolution: "Debug API endpoints, verify request/response handling"
+          - error: "Database test failures"
+            detection: "Database operations fail or return unexpected results"
+            resolution: "Verify database schema, constraints, and query logic"
+          - error: "Test environment connectivity issues"
+            detection: "Tests fail due to service connectivity problems"
+            resolution: "Verify Docker network configuration and service health"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "TEST-002.1"
+          status_marker: "[ ]"  # Not started
+          name: "API Endpoint Integration Tests"
+          description: "Implement tests for all API endpoints to verify correct request handling and response generation."
+          status: "not_started"
+          phase: 4
+          assigned_to: "tdd-task-force"
+          estimated_time: "8 hours"
+          validation:
+            criteria:
+              - "All API endpoints have corresponding test files"
+              - "Tests verify successful and error responses"
+              - "Authentication and authorization are tested"
+            commands:
+              - "docker-compose exec backend npm run test:e2e"
+              - "docker-compose exec backend npm run test:e2e:auth"
+        
+        - id: "TEST-002.2"
+          status_marker: "[ ]"  # Not started
+          name: "Database Integration Tests"
+          description: "Implement tests for database operations to verify data persistence and retrieval."
+          status: "not_started"
+          phase: 4
+          assigned_to: "tdd-task-force"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Entity repositories have corresponding test files"
+              - "CRUD operations are tested for all entities"
+              - "Constraints and relationships are verified"
+            commands:
+              - "docker-compose exec backend npm run test:db"
+              - "docker-compose exec backend npm run test:repositories"
+        
+        - id: "TEST-002.3"
+          status_marker: "[ ]"  # Not started
+          name: "Frontend-Backend Integration Tests"
+          description: "Implement tests that verify frontend components correctly interact with backend APIs."
+          status: "not_started"
+          phase: 4
+          assigned_to: "tdd-task-force"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Data fetching components correctly handle API responses"
+              - "Form submissions correctly update backend data"
+              - "Authentication flow works end-to-end"
+            commands:
+              - "docker-compose exec frontend npm run test:integration"
+              - "docker-compose exec frontend npm run test:api-client"
+
+    - id: "TEST-003"
+      status_marker: "[ ]"  # Not started
+      name: "End-to-End Testing Implementation"
+      description: "Implement end-to-end tests that simulate real user interactions with the application. These tests verify that the entire system works correctly from the user's perspective."
+      status: "not_started"
+      error_details: ""
+      phase: 4
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The TDD Task Force has expertise in designing and implementing end-to-end tests that verify the entire application works correctly from a user perspective."
+      
+      assigned_to: "tdd-task-force"
+      estimated_time: "16 hours"
+      
+      technology_stack:
+        primary_language: "TypeScript"
+        frameworks: ["Cypress", "Playwright"]
+        tools: ["Docker", "GitHub Actions"]
+      
+      prerequisites:
+        environment:
+          - "Complete application stack must be running in Docker"
+          - "Test data must be available in the database"
+        knowledge:
+          - "Understanding of Cypress or Playwright testing frameworks"
+          - "Familiarity with browser automation"
+          - "Knowledge of test data management"
+        resources:
+          - "User flow documentation"
+          - "Test scenarios documentation"
+        dependencies:
+          - "TEST-002"  # Integration Testing Implementation
+      
+      development_approach:
+        tdd_required: true
+        pair_programming: true
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "E2E tests must run in containerized environment"
+        - "Tests must cover critical user flows and scenarios"
+        - "Tests must be resilient to UI changes where possible"
+        - "Test data must be reset between test runs"
+        - "Tests must include visual regression testing"
+      
+      validation:
+        criteria:
+          - "All end-to-end tests pass successfully"
+          - "Critical user flows work as expected"
+          - "Tests run successfully in CI pipeline"
+          - "Visual regression tests detect UI changes"
+        commands:
+          - "docker-compose exec e2e-tests npm run cypress:run"
+          - "docker-compose exec e2e-tests npm run playwright:run"
+          - "docker-compose exec e2e-tests npm run visual-regression"
+      
+      error_handling:
+        potential_errors:
+          - error: "UI element not found"
+            detection: "Cypress or Playwright cannot find expected elements"
+            resolution: "Update selectors or verify element rendering"
+          - error: "Test timing issues"
+            detection: "Tests fail intermittently due to timing"
+            resolution: "Implement proper waiting strategies and retry logic"
+          - error: "Visual regression failures"
+            detection: "Visual comparison shows differences"
+            resolution: "Verify if changes are intentional, update baselines if needed"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "TEST-003.1"
+          status_marker: "[ ]"  # Not started
+          name: "User Authentication E2E Tests"
+          description: "Implement end-to-end tests for user registration, login, and authentication flows."
+          status: "not_started"
+          phase: 4
+          assigned_to: "tdd-task-force"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Registration process works end-to-end"
+              - "Login and logout function correctly"
+              - "Protected routes require authentication"
+            commands:
+              - "docker-compose exec e2e-tests npm run cypress:run:auth"
+              - "docker-compose exec e2e-tests npm run playwright:run:auth"
+        
+        - id: "TEST-003.2"
+          status_marker: "[ ]"  # Not started
+          name: "Dashboard Functionality E2E Tests"
+          description: "Implement end-to-end tests for dashboard visualization, filtering, and interaction."
+          status: "not_started"
+          phase: 4
+          assigned_to: "tdd-task-force"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Dashboard loads and displays data correctly"
+              - "Filters update visualizations as expected"
+              - "Interactive features work as designed"
+            commands:
+              - "docker-compose exec e2e-tests npm run cypress:run:dashboard"
+              - "docker-compose exec e2e-tests npm run playwright:run:dashboard"
+        
+        - id: "TEST-003.3"
+          status_marker: "[ ]"  # Not started
+          name: "Visual Regression Tests"
+          description: "Implement visual regression tests to detect unintended UI changes."
+          status: "not_started"
+          phase: 4
+          assigned_to: "tdd-task-force"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Baseline screenshots are captured for key UI states"
+              - "Visual comparison detects layout and styling changes"
+              - "Test results include visual diffs for review"
+            commands:
+              - "docker-compose exec e2e-tests npm run visual-regression:baseline"
+              - "docker-compose exec e2e-tests npm run visual-regression:compare"
+
+    - id: "TEST-004"
+      status_marker: "[ ]"  # Not started
+      name: "Performance Testing Implementation"
+      description: "Implement performance tests to verify the application meets performance requirements under various load conditions. This includes response time, throughput, and resource utilization testing."
+      status: "not_started"
+      error_details: ""
+      phase: 4
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The DevOps Engineer has expertise in performance testing methodologies and tools to verify system performance under load."
+      
+      assigned_to: "devops-engineer"
+      estimated_time: "12 hours"
+      
+      technology_stack:
+        primary_language: "TypeScript/JavaScript"
+        frameworks: []
+        tools: ["k6", "Lighthouse", "Docker"]
+      
+      prerequisites:
+        environment:
+          - "Complete application stack must be running in Docker"
+          - "Test data must be available in sufficient volume"
+        knowledge:
+          - "Understanding of performance testing methodologies"
+          - "Familiarity with k6 load testing tool"
+          - "Knowledge of web performance metrics"
+        resources:
+          - "Performance requirements documentation"
+          - "System architecture documentation"
+        dependencies:
+          - "TEST-003"  # End-to-End Testing Implementation
+      
+      development_approach:
+        tdd_required: false
+        pair_programming: false
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "Performance tests must run in isolated environment"
+        - "Tests must measure response time, throughput, and error rate"
+        - "Tests must simulate realistic user behavior"
+        - "Results must be compared against defined performance criteria"
+        - "Tests must identify performance bottlenecks"
+      
+      validation:
+        criteria:
+          - "Application meets response time requirements"
+          - "System handles required concurrent user load"
+          - "Resource utilization remains within acceptable limits"
+          - "Performance test reports are generated correctly"
+        commands:
+          - "docker-compose exec performance-tests npm run k6:run:load"
+          - "docker-compose exec performance-tests npm run lighthouse"
+          - "docker-compose exec performance-tests npm run analyze-results"
+      
+      error_handling:
+        potential_errors:
+          - error: "Performance below threshold"
+            detection: "Response times exceed defined thresholds"
+            resolution: "Identify bottlenecks, optimize code, improve caching"
+          - error: "Resource exhaustion"
+            detection: "CPU, memory, or database connection limits reached"
+            resolution: "Optimize resource usage, implement connection pooling"
+          - error: "Test environment limitations"
+            detection: "Test environment cannot generate sufficient load"
+            resolution: "Scale test environment or distribute load generation"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "TEST-004.1"
+          status_marker: "[ ]"  # Not started
+          name: "API Load Testing"
+          description: "Implement load tests for API endpoints to verify performance under concurrent load."
+          status: "not_started"
+          phase: 4
+          assigned_to: "devops-engineer"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "API endpoints handle required request volume"
+              - "Response times remain within acceptable limits"
+              - "Error rates remain below threshold under load"
+            commands:
+              - "docker-compose exec performance-tests npm run k6:run:api"
+              - "docker-compose exec performance-tests npm run analyze:api-results"
+        
+        - id: "TEST-004.2"
+          status_marker: "[ ]"  # Not started
+          name: "Frontend Performance Testing"
+          description: "Implement tests to measure frontend performance metrics like load time and rendering performance."
+          status: "not_started"
+          phase: 4
+          assigned_to: "devops-engineer"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Page load time meets requirements"
+              - "First contentful paint occurs within acceptable time"
+              - "Time to interactive meets requirements"
+            commands:
+              - "docker-compose exec performance-tests npm run lighthouse"
+              - "docker-compose exec performance-tests npm run analyze:frontend-results"
+        
+        - id: "TEST-004.3"
+          status_marker: "[ ]"  # Not started
+          name: "Database Performance Testing"
+          description: "Implement tests to measure database query performance under load."
+          status: "not_started"
+          phase: 4
+          assigned_to: "devops-engineer"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Database queries execute within time limits"
+              - "Database handles required concurrent connections"
+              - "Query plans are optimized for performance"
+            commands:
+              - "docker-compose exec performance-tests npm run k6:run:db"
+              - "docker-compose exec db pgbench -i -s 10"
+              - "docker-compose exec db pgbench -c 10 -j 2 -t 1000"
+
+    - id: "TEST-005"
+      status_marker: "[ ]"  # Not started
+      name: "Security Testing Implementation"
+      description: "Implement security tests to identify vulnerabilities and ensure the application follows security best practices. This includes authentication, authorization, input validation, and data protection testing."
+      status: "not_started"
+      error_details: ""
+      phase: 4
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The Security Auditor has expertise in identifying and mitigating security vulnerabilities in web applications."
+      
+      assigned_to: "security-auditor"
+      estimated_time: "16 hours"
+      
+      technology_stack:
+        primary_language: "TypeScript"
+        frameworks: []
+        tools: ["OWASP ZAP", "npm audit", "Snyk", "Docker"]
+      
+      prerequisites:
+        environment:
+          - "Complete application stack must be running in Docker"
+          - "Test accounts with various permission levels must be available"
+        knowledge:
+          - "Understanding of OWASP Top 10 vulnerabilities"
+          - "Familiarity with security testing tools"
+          - "Knowledge of secure coding practices"
+        resources:
+          - "Security requirements documentation"
+          - "Authentication and authorization design documentation"
+        dependencies:
+          - "TEST-003"  # End-to-End Testing Implementation
+      
+      development_approach:
+        tdd_required: false
+        pair_programming: true
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "Security tests must cover OWASP Top 10 vulnerabilities"
+        - "Tests must verify authentication and authorization controls"
+        - "Dependency scanning must identify vulnerable packages"
+        - "Tests must verify secure data handling and storage"
+        - "Results must be documented with severity ratings"
+      
+      validation:
+        criteria:
+          - "No high or critical security vulnerabilities are present"
+          - "Authentication and authorization controls work correctly"
+          - "Input validation prevents injection attacks"
+          - "Sensitive data is properly protected"
+        commands:
+          - "docker-compose exec security-tests npm run zap:scan"
+          - "docker-compose exec frontend npm audit"
+          - "docker-compose exec backend npm audit"
+          - "docker-compose exec security-tests npm run snyk:test"
+      
+      error_handling:
+        potential_errors:
+          - error: "Security vulnerabilities detected"
+            detection: "Security scanning tools report vulnerabilities"
+            resolution: "Prioritize and fix vulnerabilities based on severity"
+          - error: "Vulnerable dependencies"
+            detection: "Dependency scanning shows vulnerable packages"
+            resolution: "Update dependencies to secure versions"
+          - error: "Authentication bypass"
+            detection: "Security tests can access protected resources"
+            resolution: "Fix authentication and authorization controls"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "TEST-005.1"
+          status_marker: "[ ]"  # Not started
+          name: "Authentication and Authorization Testing"
+          description: "Implement tests to verify authentication and authorization controls."
+          status: "not_started"
+          phase: 4
+          assigned_to: "security-auditor"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Authentication prevents unauthorized access"
+              - "Authorization controls restrict access based on roles"
+              - "Session management is secure"
+            commands:
+              - "docker-compose exec security-tests npm run test:auth-security"
+              - "docker-compose exec security-tests npm run zap:auth-scan"
+        
+        - id: "TEST-005.2"
+          status_marker: "[ ]"  # Not started
+          name: "Injection and Input Validation Testing"
+          description: "Implement tests to verify protection against injection attacks and proper input validation."
+          status: "not_started"
+          phase: 4
+          assigned_to: "security-auditor"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "SQL injection attacks are prevented"
+              - "XSS attacks are prevented"
+              - "CSRF protections are in place"
+            commands:
+              - "docker-compose exec security-tests npm run test:injection"
+              - "docker-compose exec security-tests npm run zap:active-scan"
+        
+        - id: "TEST-005.3"
+          status_marker: "[ ]"  # Not started
+          name: "Dependency and Configuration Security Testing"
+          description: "Implement tests to identify vulnerable dependencies and insecure configurations."
+          status: "not_started"
+          phase: 4
+          assigned_to: "security-auditor"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "No vulnerable dependencies are used"
+              - "Security headers are properly configured"
+              - "Sensitive information is not exposed"
+            commands:
+              - "docker-compose exec frontend npm audit"
+              - "docker-compose exec backend npm audit"
+              - "docker-compose exec security-tests npm run snyk:test"
+              - "docker-compose exec security-tests npm run test:headers"

@@ -1,0 +1,434 @@
+# Project Initialization Workflow - config/01_project_initialization.yaml
+# This example demonstrates the expected structure and level of detail for workflow YAML files
+
+project_metadata:
+  name: "Sales Analytics Dashboard"
+  description: "A responsive web application with comprehensive data visualization capabilities for sales analytics"
+  project_type: "Minimum Viable Product (MVP)"
+  
+  # From user-provided project scope
+  problem_statement: "Sales managers lack real-time visibility into team performance and sales trends"
+  target_users: "Sales managers, executives, and sales representatives"
+  key_features:
+    - "Real-time sales data visualization with filtering capabilities"
+    - "Team performance comparisons and historical trend analysis"
+    - "Customizable dashboards for different user roles"
+    - "Automated sales forecasting using historical data"
+    - "Export capabilities for reports and presentations"
+  success_criteria:
+    - "Dashboard loads in under 2 seconds even with large datasets"
+    - "All visualizations update in real-time as data changes"
+    - "Users can create and save custom views of the data"
+    - "System handles at least 500 concurrent users"
+    - "Data is refreshed from source systems every 5 minutes"
+  
+  # From recruitment_prompt technology selections
+  primary_language: "TypeScript"
+  frontend_framework: "Next.js"
+  styling_framework: "Tailwind CSS"
+  data_visualization: "Apache ECharts"
+  backend_framework: "NestJS"
+  database: "PostgreSQL"
+  containerization: "Docker"
+  ci_cd_pipeline: "GitHub Actions"
+
+workflow:
+  phase: 1  # Project Initialization
+  estimated_duration: "2 days"
+  
+  steps:
+    - id: "DEVOPS-001"
+      status_marker: "[ ]"  # Not started
+      name: "Project Requirements Analysis"
+      description: "Analyze the project requirements to establish a clear understanding of the technical needs, constraints, and objectives. This step ensures all subsequent development is aligned with project goals."
+      status: "not_started"
+      error_details: ""
+      phase: 1
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The Architecture Engineer has the expertise to analyze requirements and establish the foundational architecture based on the selected technology stack."
+      
+      assigned_to: "architecture-engineer"
+      estimated_time: "4 hours"
+      
+      technology_stack:
+        primary_language: "TypeScript"
+        frameworks: ["Next.js", "NestJS"]
+        tools: ["Docker", "GitHub"]
+      
+      prerequisites:
+        environment:
+          - "Docker must be installed and running"
+          - "Node.js v18+ must be available in the Docker container"
+        knowledge:
+          - "Understanding of Next.js and NestJS architecture"
+          - "Familiarity with TypeScript configuration"
+        resources:
+          - "Project requirements document"
+        dependencies: []
+      
+      development_approach:
+        tdd_required: false
+        pair_programming: false
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "Centralized Configuration principle must be established from the beginning"
+        - "Directory structure must follow the Feature-based organization pattern"
+        - "All configuration must be environment-variable driven"
+      
+      validation:
+        criteria:
+          - "Requirements document has been analyzed"
+          - "Key technical decisions are documented"
+          - "Initial architecture diagram is created"
+        commands:
+          - "Verify existence of docs/architecture/requirements-analysis.md"
+      
+      error_handling:
+        potential_errors:
+          - error: "Incomplete requirements"
+            detection: "Missing critical information about data models or API requirements"
+            resolution: "Escalate to Project Orchestrator for clarification from stakeholders"
+      
+      git_operations:
+        required: false
+        confirmation_required: false
+      
+      substeps:
+        - id: "DEVOPS-001.1"
+          status_marker: "[ ]"  # Not started
+          name: "Document Technical Requirements"
+          description: "Create a comprehensive document outlining all technical requirements extracted from the project brief."
+          status: "not_started"
+          phase: 1
+          assigned_to: "architecture-engineer"
+          estimated_time: "2 hours"
+          validation:
+            criteria:
+              - "Technical requirements document created in Markdown format"
+            commands:
+              - "Verify existence of docs/requirements/technical-requirements.md"
+
+    - id: "DEVOPS-002"
+      status_marker: "[ ]"  # Not started
+      name: "Repository Initialization"
+      description: "Initialize the Git repository with the proper structure, configuration files, and initial documentation. This establishes the foundation for all subsequent development work."
+      status: "not_started"
+      error_details: ""
+      phase: 1
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The Git Gatekeeper is responsible for all Git operations and repository management."
+      
+      assigned_to: "git-gatekeeper"
+      estimated_time: "2 hours"
+      
+      technology_stack:
+        primary_language: "TypeScript"
+        frameworks: []
+        tools: ["Git", "GitHub"]
+      
+      prerequisites:
+        environment:
+          - "Git must be installed in the Docker container"
+          - "GitHub access must be configured"
+        knowledge:
+          - "Git repository initialization"
+          - "GitHub workflow configuration"
+        resources:
+          - "GitHub account credentials"
+        dependencies:
+          - "init-01"
+      
+      development_approach:
+        tdd_required: false
+        pair_programming: false
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "Repository must include comprehensive .gitignore file"
+        - "GitHub Actions workflow files must be included for CI/CD"
+        - "README.md must be initialized with project overview"
+      
+      validation:
+        criteria:
+          - "Git repository is initialized"
+          - "Initial commit contains required configuration files"
+          - "Remote repository is configured"
+        commands:
+          - "git status"
+          - "git log"
+          - "git remote -v"
+      
+      error_handling:
+        potential_errors:
+          - error: "GitHub authentication failure"
+            detection: "Error message when attempting to push to remote repository"
+            resolution: "Verify GitHub credentials and SSH keys, reconfigure if necessary"
+          - error: "Permission issues"
+            detection: "Access denied errors when creating repository"
+            resolution: "Verify user permissions on GitHub, request necessary access"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "DEVOPS-002.1"
+          status_marker: "[ ]"  # Not started
+          name: "Create Local Repository"
+          description: "Initialize a new Git repository locally with the appropriate .gitignore and configuration."
+          status: "not_started"
+          phase: 1
+          assigned_to: "git-gatekeeper"
+          estimated_time: "30 minutes"
+          validation:
+            criteria:
+              - "Local Git repository is initialized"
+              - ".gitignore file is created with appropriate exclusions"
+            commands:
+              - "git status"
+              - "ls -la .git"
+
+        - id: "DEVOPS-002.2"
+          status_marker: "[ ]"  # Not started
+          name: "Create Remote Repository"
+          description: "Create a new repository on GitHub and configure it as the remote for the local repository."
+          status: "not_started"
+          phase: 1
+          assigned_to: "git-gatekeeper"
+          estimated_time: "30 minutes"
+          validation:
+            criteria:
+              - "Remote repository is created on GitHub"
+              - "Local repository is connected to remote"
+            commands:
+              - "git remote -v"
+
+        - id: "DEVOPS-002.3"
+          status_marker: "[ ]"  # Not started
+          name: "Initial Commit and Push"
+          description: "Create the initial commit with basic project structure and push to the remote repository."
+          status: "not_started"
+          phase: 1
+          assigned_to: "git-gatekeeper"
+          estimated_time: "1 hour"
+          validation:
+            criteria:
+              - "Initial commit is created"
+              - "Changes are pushed to remote repository"
+            commands:
+              - "git log"
+              - "git push -u origin main"
+
+    - id: "DEVOPS-003"
+      status_marker: "[ ]"  # Not started
+      name: "Docker Environment Setup"
+      description: "Create Docker configuration for development, testing, and production environments. This ensures consistent environments across all development stages and deployment targets."
+      status: "not_started"
+      error_details: ""
+      phase: 1
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The DevOps Engineer specializes in containerization and environment configuration."
+      
+      assigned_to: "devops-engineer"
+      estimated_time: "6 hours"
+      
+      technology_stack:
+        primary_language: "YAML/Dockerfile"
+        frameworks: []
+        tools: ["Docker", "Docker Compose"]
+      
+      prerequisites:
+        environment:
+          - "Docker must be installed on the host system"
+          - "Docker Compose must be available"
+        knowledge:
+          - "Docker configuration for Node.js applications"
+          - "Multi-stage Docker builds"
+          - "Docker Compose for local development"
+        resources:
+          - "Docker Hub access"
+        dependencies:
+          - "init-02"
+      
+      development_approach:
+        tdd_required: false
+        pair_programming: false
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "All development must occur within Docker containers"
+        - "Environment-specific configuration must be externalized"
+        - "Docker Compose must be used for local development"
+        - "Multi-stage builds must be used for production images"
+      
+      validation:
+        criteria:
+          - "Dockerfile exists and builds successfully"
+          - "Docker Compose configuration exists and runs successfully"
+          - "Development environment can be started with a single command"
+          - "All required services are defined in Docker Compose"
+        commands:
+          - "docker build -t project-name ."
+          - "docker-compose up -d"
+          - "docker-compose ps"
+          - "docker-compose exec app ls -la"  # Verify container filesystem
+      
+      error_handling:
+        potential_errors:
+          - error: "Docker build failure"
+            detection: "Error message during docker build command"
+            resolution: "Check Dockerfile syntax, verify base images, check build context"
+          - error: "Docker Compose configuration issues"
+            detection: "Error when running docker-compose up"
+            resolution: "Verify service definitions, check network configuration, validate volume mounts"
+          - error: "Container startup failures"
+            detection: "Containers exit immediately after starting"
+            resolution: "Check container logs, verify entrypoint scripts, check environment variables"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "DEVOPS-003.1"
+          status_marker: "[ ]"  # Not started
+          name: "Create Development Dockerfile"
+          description: "Create a Dockerfile optimized for development with hot-reloading and debugging capabilities."
+          status: "not_started"
+          phase: 1
+          assigned_to: "devops-engineer"
+          estimated_time: "2 hours"
+          validation:
+            criteria:
+              - "Development Dockerfile exists"
+              - "Image builds successfully"
+              - "Container runs with appropriate development features"
+            commands:
+              - "docker build -f Dockerfile.dev -t project-name:dev ."
+              - "docker run -it --rm project-name:dev ls -la"  # Verify development container setup
+              - "docker run -it --rm project-name:dev node -v"  # Verify Node.js version in container
+
+        - id: "DEVOPS-003.2"
+          status_marker: "[ ]"  # Not started
+          name: "Create Production Dockerfile"
+          description: "Create a production-optimized Dockerfile with multi-stage builds for minimal image size."
+          status: "not_started"
+          phase: 1
+          assigned_to: "devops-engineer"
+          estimated_time: "2 hours"
+          validation:
+            criteria:
+              - "Production Dockerfile exists"
+              - "Multi-stage build is implemented"
+              - "Final image is optimized for size and security"
+            commands:
+              - "docker build -t project-name:prod ."
+              - "docker image ls project-name:prod"
+              - "docker run --rm project-name:prod ls -la /app"  # Verify production container structure
+
+        - id: "DEVOPS-003.3"
+          status_marker: "[ ]"  # Not started
+          name: "Create Docker Compose Configuration"
+          description: "Create Docker Compose configuration for local development with all required services."
+          status: "not_started"
+          phase: 1
+          assigned_to: "devops-engineer"
+          estimated_time: "2 hours"
+          validation:
+            criteria:
+              - "docker-compose.yml file exists"
+              - "All required services are defined"
+              - "Environment can be started with a single command"
+            commands:
+              - "docker-compose up -d"
+              - "docker-compose ps"
+              - "docker-compose exec app env"  # Verify environment variables
+              - "docker-compose exec db psql -U postgres -c '\\l'"  # Verify database connection
+              
+    # Example of a completed step with different status marker
+    - id: "FRONT-001"
+      status_marker: "[✓]"  # Complete
+      name: "Setup Frontend Project Structure"
+      description: "Initialize the Next.js project with TypeScript and set up the basic directory structure following the feature-based organization pattern."
+      status: "complete"
+      phase: 1
+      orchestrator:
+        action: "delegate"
+        rationale: "The UI/UX Specialist has expertise in frontend architecture and Next.js project setup."
+      assigned_to: "ui-ux-specialist"
+      estimated_time: "3 hours"
+      technology_stack:
+        primary_language: "TypeScript"
+        frameworks: ["Next.js"]
+        tools: ["Docker", "ESLint", "Prettier"]
+        
+      validation:
+        criteria:
+          - "Next.js project structure is created"
+          - "TypeScript is configured correctly"
+          - "Directory structure follows feature-based organization"
+        commands:
+          - "docker-compose exec frontend ls -la"
+          - "docker-compose exec frontend cat tsconfig.json"
+          - "docker-compose exec frontend npm list"
+      
+    # Example of a pending step
+    - id: "BACK-001"
+      status_marker: "[P]"  # Pending
+      name: "Setup Backend API Structure"
+      description: "Initialize the NestJS project and set up the core API structure with proper module organization."
+      status: "pending"
+      phase: 1
+      orchestrator:
+        action: "delegate"
+        rationale: "The Feature Developer specializing in backend has expertise in NestJS architecture."
+      assigned_to: "feature-developer"
+      estimated_time: "4 hours"
+      technology_stack:
+        primary_language: "TypeScript"
+        frameworks: ["NestJS"]
+        tools: ["Docker", "ESLint", "Prettier"]
+        
+      validation:
+        criteria:
+          - "NestJS project structure is created"
+          - "Module organization follows best practices"
+          - "TypeScript is configured correctly"
+        commands:
+          - "docker-compose exec backend ls -la"
+          - "docker-compose exec backend cat nest-cli.json"
+          - "docker-compose exec backend npm list"
+      
+    # Example of an error step
+    - id: "DB-001"
+      status_marker: "[!]"  # Error
+      name: "Setup Database Schema"
+      description: "Design and implement the initial database schema for the sales analytics data model."
+      status: "error"
+      error_details: "Unable to connect to PostgreSQL server. Docker container failed to start due to port conflict."
+      phase: 1
+      orchestrator:
+        action: "delegate"
+        rationale: "The Data Engineer has expertise in database schema design and PostgreSQL."
+      assigned_to: "data-engineer"
+      estimated_time: "5 hours"
+      technology_stack:
+        primary_language: "SQL"
+        frameworks: []
+        tools: ["PostgreSQL", "TypeORM", "Docker"]
+        
+      validation:
+        criteria:
+          - "Database schema is defined"
+          - "Migrations are created"
+          - "Entity relationships are properly defined"
+        commands:
+          - "docker-compose exec db psql -U postgres -c '\\dt'"
+          - "docker-compose exec backend npx typeorm migration:show"

@@ -1,0 +1,666 @@
+# Core Infrastructure Development Workflow - config/02_core_infrastructure.yaml
+# This file documents the steps for establishing the core infrastructure of the project
+
+project_metadata:
+  name: "Sales Analytics Dashboard"
+  description: "A responsive web application with comprehensive data visualization capabilities for sales analytics"
+  project_type: "Minimum Viable Product (MVP)"
+  
+  # From user-provided project scope
+  problem_statement: "Sales managers lack real-time visibility into team performance and sales trends"
+  target_users: "Sales managers, executives, and sales representatives"
+  key_features:
+    - "Real-time sales data visualization with filtering capabilities"
+    - "Team performance comparisons and historical trend analysis"
+    - "Customizable dashboards for different user roles"
+    - "Automated sales forecasting using historical data"
+    - "Export capabilities for reports and presentations"
+  success_criteria:
+    - "Dashboard loads in under 2 seconds even with large datasets"
+    - "All visualizations update in real-time as data changes"
+    - "Users can create and save custom views of the data"
+    - "System handles at least 500 concurrent users"
+    - "Data is refreshed from source systems every 5 minutes"
+  
+  # From recruitment_prompt technology selections
+  primary_language: "TypeScript"
+  frontend_framework: "Next.js"
+  styling_framework: "Tailwind CSS"
+  data_visualization: "Apache ECharts"
+  backend_framework: "NestJS"
+  database: "PostgreSQL"
+  containerization: "Docker"
+  ci_cd_pipeline: "GitHub Actions"
+
+workflow:
+  phase: 2  # Core Infrastructure Development
+  estimated_duration: "5 days"
+  
+  steps:
+    - id: "DB-001"
+      status_marker: "[ ]"  # Not started
+      name: "Database Schema Design"
+      description: "Design and implement the initial database schema for the sales analytics data model. This includes defining tables, relationships, indexes, and constraints to efficiently store and query sales data."
+      status: "not_started"
+      error_details: ""
+      phase: 2
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The Data Engineer has expertise in database schema design and PostgreSQL optimization for analytics workloads."
+      
+      assigned_to: "data-engineer"
+      estimated_time: "8 hours"
+      
+      technology_stack:
+        primary_language: "SQL"
+        frameworks: ["TypeORM"]
+        tools: ["PostgreSQL", "pgAdmin"]
+      
+      prerequisites:
+        environment:
+          - "Docker container with PostgreSQL must be running"
+          - "Database connection parameters must be configured in the centralized configuration"
+        knowledge:
+          - "Understanding of sales data structures and relationships"
+          - "Expertise in PostgreSQL schema design for analytics"
+          - "Familiarity with TypeORM entity definitions"
+        resources:
+          - "Sales data model documentation"
+          - "Sample data for testing"
+        dependencies:
+          - "DEVOPS-003"  # Docker Environment Setup
+      
+      development_approach:
+        tdd_required: true
+        pair_programming: false
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "Schema must follow the centralized configuration principle"
+        - "All tables must include created_at and updated_at timestamps"
+        - "Foreign keys must be properly defined for all relationships"
+        - "Appropriate indexes must be created for query optimization"
+        - "Schema must be version-controlled with migration scripts"
+      
+      validation:
+        criteria:
+          - "Schema can be created from migration scripts"
+          - "Sample data can be loaded successfully"
+          - "All required queries can be executed efficiently"
+          - "Entity relationships are correctly defined in TypeORM"
+        commands:
+          - "docker-compose exec backend npm run typeorm migration:run"
+          - "docker-compose exec backend npm run seed:test-data"
+          - "docker-compose exec backend npm run test:db-queries"
+          - "docker-compose exec db psql -U postgres -c '\\dt'"  # Verify tables in database
+      
+      error_handling:
+        potential_errors:
+          - error: "Migration script failure"
+            detection: "Error during migration execution"
+            resolution: "Review migration script for syntax errors or conflicts with existing schema"
+          - error: "Performance issues with complex queries"
+            detection: "Query execution time exceeds 500ms"
+            resolution: "Review query plans and add appropriate indexes"
+          - error: "Data integrity issues"
+            detection: "Constraint violations during test data insertion"
+            resolution: "Adjust constraints or fix test data to ensure integrity"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "DB-001.1"
+          status_marker: "[ ]"  # Not started
+          name: "Define Entity Relationships"
+          description: "Create an entity-relationship diagram and define the relationships between sales entities."
+          status: "not_started"
+          phase: 2
+          assigned_to: "data-engineer"
+          estimated_time: "2 hours"
+          validation:
+            criteria:
+              - "ER diagram created and reviewed"
+              - "All entity relationships documented"
+            commands:
+              - "docker-compose exec backend ls -la docs/database/er-diagram.png"
+              - "docker-compose exec backend cat docs/database/README.md"  # Check documentation
+        
+        - id: "DB-001.2"
+          status_marker: "[ ]"  # Not started
+          name: "Create TypeORM Entities"
+          description: "Implement TypeORM entity classes for all database tables with appropriate decorators for relationships and validations."
+          status: "not_started"
+          phase: 2
+          assigned_to: "data-engineer"
+          estimated_time: "3 hours"
+          validation:
+            criteria:
+              - "All entities defined with correct properties and types"
+              - "Relationships properly configured with TypeORM decorators"
+              - "Validation rules implemented for all fields"
+            commands:
+              - "docker-compose exec backend npm run test:entities"
+              - "docker-compose exec backend ls -la src/entities"  # List entity files
+        
+        - id: "DB-001.3"
+          status_marker: "[ ]"  # Not started
+          name: "Create Migration Scripts"
+          description: "Generate and refine database migration scripts for creating the schema."
+          status: "not_started"
+          phase: 2
+          assigned_to: "data-engineer"
+          estimated_time: "2 hours"
+          validation:
+            criteria:
+              - "Migration scripts created for all tables"
+              - "Scripts include indexes and constraints"
+              - "Migration can be run successfully"
+            commands:
+              - "docker-compose exec backend npm run typeorm migration:run"
+              - "docker-compose exec backend npm run typeorm migration:revert"
+              - "docker-compose exec backend npm run typeorm migration:run"
+              - "docker-compose exec backend ls -la src/migrations"  # List migration files
+
+    - id: "BACK-001"
+      status_marker: "[ ]"  # Not started
+      name: "Authentication System Implementation"
+      description: "Implement a secure authentication system using JWT tokens with role-based access control for different user types (sales managers, executives, representatives)."
+      status: "not_started"
+      error_details: ""
+      phase: 2
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The Security Auditor has expertise in implementing secure authentication systems and role-based access control."
+      
+      assigned_to: "security-auditor"
+      estimated_time: "10 hours"
+      
+      technology_stack:
+        primary_language: "TypeScript"
+        frameworks: ["NestJS", "Passport.js"]
+        tools: ["JWT", "bcrypt"]
+      
+      prerequisites:
+        environment:
+          - "NestJS backend must be initialized"
+          - "Database schema must include users and roles tables"
+        knowledge:
+          - "Understanding of JWT authentication flow"
+          - "Familiarity with Passport.js strategies"
+          - "Knowledge of secure password storage practices"
+        resources:
+          - "User roles and permissions documentation"
+        dependencies:
+          - "DB-001"  # Database Schema Design
+      
+      development_approach:
+        tdd_required: true
+        pair_programming: true
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "Authentication must use JWT with appropriate expiration"
+        - "Passwords must be hashed using bcrypt with sufficient rounds"
+        - "Role-based access control must be implemented for all routes"
+        - "Refresh token mechanism must be implemented for session management"
+        - "All authentication endpoints must be thoroughly tested"
+      
+      validation:
+        criteria:
+          - "Users can register and login successfully"
+          - "JWT tokens are issued and validated correctly"
+          - "Role-based access control restricts unauthorized access"
+          - "Password reset functionality works as expected"
+          - "All authentication tests pass"
+        commands:
+          - "docker-compose exec backend npm run test:auth"
+          - "docker-compose exec backend npm run test:e2e:auth"
+          - "docker-compose exec backend curl -X POST http://localhost:3000/api/auth/login -H 'Content-Type: application/json' -d '{\"email\":\"test@example.com\",\"password\":\"password\"}'"  # Test login endpoint
+      
+      error_handling:
+        potential_errors:
+          - error: "Invalid credentials"
+            detection: "Failed login attempts"
+            resolution: "Return appropriate error message without revealing specific details"
+          - error: "Expired token"
+            detection: "JWT validation failure due to expiration"
+            resolution: "Redirect to login or use refresh token if available"
+          - error: "Insufficient permissions"
+            detection: "Attempt to access restricted resource"
+            resolution: "Return 403 Forbidden with appropriate message"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "BACK-001.1"
+          status_marker: "[ ]"  # Not started
+          name: "Implement User Authentication"
+          description: "Create authentication controllers, services, and strategies for user login and registration."
+          status: "not_started"
+          phase: 2
+          assigned_to: "security-auditor"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Authentication controller implemented with login and register endpoints"
+              - "JWT strategy configured correctly"
+              - "Password hashing implemented securely"
+            commands:
+              - "docker-compose exec backend npm run test:auth:unit"
+              - "docker-compose exec backend ls -la src/auth"  # List auth module files
+        
+        - id: "BACK-001.2"
+          status_marker: "[ ]"  # Not started
+          name: "Implement Role-Based Access Control"
+          description: "Create guards and decorators for role-based access control to protect routes based on user roles."
+          status: "not_started"
+          phase: 2
+          assigned_to: "security-auditor"
+          estimated_time: "3 hours"
+          validation:
+            criteria:
+              - "Role guard implemented and tested"
+              - "Role decorator created for controller methods"
+              - "Permission checks working correctly"
+            commands:
+              - "docker-compose exec backend npm run test:auth:rbac"
+              - "docker-compose exec backend cat src/auth/guards/roles.guard.ts"  # Check roles guard implementation
+        
+        - id: "BACK-001.3"
+          status_marker: "[ ]"  # Not started
+          name: "Implement Token Management"
+          description: "Create services for JWT token issuance, validation, refresh, and revocation."
+          status: "not_started"
+          phase: 2
+          assigned_to: "security-auditor"
+          estimated_time: "3 hours"
+          validation:
+            criteria:
+              - "Token service implemented with all required methods"
+              - "Refresh token mechanism working correctly"
+              - "Token revocation for logout functionality"
+            commands:
+              - "docker-compose exec backend npm run test:auth:tokens"
+              - "docker-compose exec backend cat src/auth/services/token.service.ts"  # Check token service implementation
+
+    - id: "FRONT-001"
+      status_marker: "[ ]"  # Not started
+      name: "UI Component Library Setup"
+      description: "Establish a comprehensive UI component library using Tailwind CSS and Next.js, creating reusable components for the dashboard interface."
+      status: "not_started"
+      error_details: ""
+      phase: 2
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The UI/UX Specialist has expertise in creating reusable component libraries and implementing design systems."
+      
+      assigned_to: "ui-ux-specialist"
+      estimated_time: "12 hours"
+      
+      technology_stack:
+        primary_language: "TypeScript"
+        frameworks: ["Next.js", "React"]
+        tools: ["Tailwind CSS", "Storybook"]
+      
+      prerequisites:
+        environment:
+          - "Next.js project must be initialized"
+          - "Tailwind CSS must be configured"
+          - "Storybook must be set up for component documentation"
+        knowledge:
+          - "Understanding of atomic design principles"
+          - "Expertise in Tailwind CSS utility classes"
+          - "Familiarity with React component patterns"
+        resources:
+          - "Design system documentation"
+          - "UI mockups for dashboard components"
+        dependencies:
+          - "FRONT-001"  # Setup Frontend Project Structure (from Phase 1)
+      
+      development_approach:
+        tdd_required: true
+        pair_programming: false
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "All components must use Tailwind CSS for styling"
+        - "Components must be fully responsive for all screen sizes"
+        - "Accessibility standards (WCAG 2.1 AA) must be followed"
+        - "Components must be documented in Storybook"
+        - "Theme configuration must be centralized in tailwind.config.js"
+      
+      validation:
+        criteria:
+          - "All components render correctly in Storybook"
+          - "Components pass accessibility tests"
+          - "Responsive behavior works on all target screen sizes"
+          - "Component tests pass with high coverage"
+        commands:
+          - "docker-compose exec frontend npm run test:components"
+          - "docker-compose exec frontend npm run storybook:build"
+          - "docker-compose exec frontend npm run test:a11y"
+          - "docker-compose exec frontend ls -la src/components"  # List component files
+      
+      error_handling:
+        potential_errors:
+          - error: "Styling inconsistencies"
+            detection: "Visual regression in Storybook"
+            resolution: "Review Tailwind configuration and component styles"
+          - error: "Accessibility violations"
+            detection: "Failures in accessibility tests"
+            resolution: "Fix ARIA attributes, contrast issues, or keyboard navigation"
+          - error: "Responsive layout issues"
+            detection: "Layout breaks at certain screen sizes"
+            resolution: "Adjust responsive utility classes and test on various viewports"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "FRONT-001.1"
+          status_marker: "[ ]"  # Not started
+          name: "Create Base UI Components"
+          description: "Implement foundational UI components like buttons, inputs, cards, and typography elements."
+          status: "not_started"
+          phase: 2
+          assigned_to: "ui-ux-specialist"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Base components implemented with proper props and styling"
+              - "Components documented in Storybook"
+              - "Unit tests written for all components"
+            commands:
+              - "docker-compose exec frontend npm run test:components:base"
+              - "docker-compose exec frontend ls -la src/components/base"  # List base component files
+        
+        - id: "FRONT-001.2"
+          status_marker: "[ ]"  # Not started
+          name: "Create Layout Components"
+          description: "Implement layout components like containers, grids, sidebars, and navigation elements."
+          status: "not_started"
+          phase: 2
+          assigned_to: "ui-ux-specialist"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Layout components implemented with responsive behavior"
+              - "Components documented in Storybook"
+              - "Layout components tested across breakpoints"
+            commands:
+              - "docker-compose exec frontend npm run test:components:layout"
+              - "docker-compose exec frontend ls -la src/components/layout"  # List layout component files
+        
+        - id: "FRONT-001.3"
+          status_marker: "[ ]"  # Not started
+          name: "Create Data Visualization Components"
+          description: "Implement chart and graph components using Apache ECharts with Tailwind theming."
+          status: "not_started"
+          phase: 2
+          assigned_to: "ui-ux-specialist"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Chart components implemented with proper data binding"
+              - "Visualization components themed consistently with the design system"
+              - "Components documented in Storybook with sample data"
+            commands:
+              - "docker-compose exec frontend npm run test:components:charts"
+              - "docker-compose exec frontend ls -la src/components/charts"  # List chart component files
+
+    - id: "INT-001"
+      status_marker: "[ ]"  # Not started
+      name: "API Layer Implementation"
+      description: "Develop the core API layer using NestJS, implementing RESTful endpoints for data access with proper validation and error handling."
+      status: "not_started"
+      error_details: ""
+      phase: 2
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The Feature Developer specializing in backend has expertise in NestJS API development and RESTful design patterns."
+      
+      assigned_to: "feature-developer"
+      estimated_time: "16 hours"
+      
+      technology_stack:
+        primary_language: "TypeScript"
+        frameworks: ["NestJS", "TypeORM"]
+        tools: ["class-validator", "Swagger"]
+      
+      prerequisites:
+        environment:
+          - "NestJS backend must be initialized"
+          - "Database schema must be implemented"
+          - "Authentication system must be in place"
+        knowledge:
+          - "Understanding of RESTful API design principles"
+          - "Expertise in NestJS controllers, services, and modules"
+          - "Familiarity with TypeORM repositories and query building"
+        resources:
+          - "API specification documentation"
+          - "Data model documentation"
+        dependencies:
+          - "DB-001"  # Database Schema Design
+          - "BACK-001"  # Authentication System Implementation
+      
+      development_approach:
+        tdd_required: true
+        pair_programming: false
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "All endpoints must follow RESTful conventions"
+        - "Input validation must be implemented for all endpoints"
+        - "Error responses must be standardized across the API"
+        - "API documentation must be generated using Swagger/OpenAPI"
+        - "Rate limiting must be implemented for public endpoints"
+      
+      validation:
+        criteria:
+          - "All API endpoints return correct responses"
+          - "Input validation correctly handles invalid requests"
+          - "Authentication and authorization are enforced"
+          - "API documentation is complete and accurate"
+          - "Performance meets requirements under load"
+        commands:
+          - "docker-compose exec backend npm run test:api"
+          - "docker-compose exec backend npm run test:e2e"
+          - "docker-compose exec backend npm run docs:api"
+          - "docker-compose exec backend curl http://localhost:3000/api"  # Test API root endpoint
+      
+      error_handling:
+        potential_errors:
+          - error: "Invalid input data"
+            detection: "Validation errors from class-validator"
+            resolution: "Return 400 Bad Request with detailed validation errors"
+          - error: "Resource not found"
+            detection: "Query returns no results"
+            resolution: "Return 404 Not Found with appropriate message"
+          - error: "Database query error"
+            detection: "Exception from TypeORM operations"
+            resolution: "Log error details and return 500 Internal Server Error"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "INT-001.1"
+          status_marker: "[ ]"  # Not started
+          name: "Implement Data Access Layer"
+          description: "Create services and repositories for database access with proper abstraction."
+          status: "not_started"
+          phase: 2
+          assigned_to: "feature-developer"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Services implemented for all entity types"
+              - "Repository methods created for common queries"
+              - "Unit tests written for all services"
+            commands:
+              - "docker-compose exec backend npm run test:services"
+              - "docker-compose exec backend ls -la src/services"  # List service files
+        
+        - id: "INT-001.2"
+          status_marker: "[ ]"  # Not started
+          name: "Implement API Controllers"
+          description: "Create RESTful controllers with proper routing, validation, and documentation."
+          status: "not_started"
+          phase: 2
+          assigned_to: "feature-developer"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Controllers implemented for all resource types"
+              - "Input validation using class-validator DTOs"
+              - "Swagger documentation for all endpoints"
+            commands:
+              - "npm run test:controllers"
+        
+        - id: "INT-001.3"
+          status_marker: "[ ]"  # Not started
+          name: "Implement API Middleware"
+          description: "Create middleware for logging, error handling, and request transformation."
+          status: "not_started"
+          phase: 2
+          assigned_to: "feature-developer"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Logging middleware implemented"
+              - "Error handling middleware with standardized responses"
+              - "Request/response transformation middleware"
+            commands:
+              - "npm run test:middleware"
+
+    - id: "DEVOPS-004"
+      status_marker: "[ ]"  # Not started
+      name: "Continuous Integration Setup"
+      description: "Configure GitHub Actions for continuous integration, including automated testing, linting, and build verification."
+      status: "not_started"
+      error_details: ""
+      phase: 2
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The DevOps Engineer has expertise in CI/CD pipeline configuration and GitHub Actions workflows."
+      
+      assigned_to: "devops-engineer"
+      estimated_time: "8 hours"
+      
+      technology_stack:
+        primary_language: "YAML"
+        frameworks: []
+        tools: ["GitHub Actions", "Jest", "ESLint", "Prettier"]
+      
+      prerequisites:
+        environment:
+          - "GitHub repository must be initialized"
+          - "Project must have test scripts configured"
+          - "Linting and formatting rules must be defined"
+        knowledge:
+          - "Understanding of GitHub Actions workflow syntax"
+          - "Familiarity with CI/CD principles"
+          - "Knowledge of testing and code quality tools"
+        resources:
+          - "GitHub repository credentials"
+          - "Testing and linting configuration files"
+        dependencies:
+          - "DEVOPS-002"  # Repository Initialization (from Phase 1)
+      
+      development_approach:
+        tdd_required: false
+        pair_programming: false
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "CI workflow must run on all pull requests and pushes to main branch"
+        - "All tests must pass before allowing merge"
+        - "Code quality checks must be enforced"
+        - "Build artifacts must be verified"
+        - "CI results must be reported as GitHub status checks"
+      
+      validation:
+        criteria:
+          - "CI workflow runs successfully on pull requests"
+          - "Failed tests or linting issues block merges"
+          - "Build artifacts are generated correctly"
+          - "CI results are reported as status checks"
+        commands:
+          - "git push origin feature/ci-test"
+          - "Check GitHub Actions tab for workflow results"
+      
+      error_handling:
+        potential_errors:
+          - error: "Workflow syntax errors"
+            detection: "GitHub Actions validation failure"
+            resolution: "Fix YAML syntax in workflow files"
+          - error: "Test failures in CI"
+            detection: "Failed job in GitHub Actions"
+            resolution: "Review test logs and fix failing tests"
+          - error: "Build failures in CI"
+            detection: "Failed build job in GitHub Actions"
+            resolution: "Review build logs and fix build issues"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "DEVOPS-004.1"
+          status_marker: "[ ]"  # Not started
+          name: "Create Test Workflow"
+          description: "Configure GitHub Actions workflow for running tests on pull requests and pushes."
+          status: "not_started"
+          phase: 2
+          assigned_to: "devops-engineer"
+          estimated_time: "3 hours"
+          validation:
+            criteria:
+              - "Workflow file created for running tests"
+              - "Tests run successfully in GitHub Actions"
+              - "Test results reported as status checks"
+            commands:
+              - "git push origin feature/test-workflow"
+        
+        - id: "DEVOPS-004.2"
+          status_marker: "[ ]"  # Not started
+          name: "Create Linting and Formatting Workflow"
+          description: "Configure GitHub Actions workflow for code quality checks."
+          status: "not_started"
+          phase: 2
+          assigned_to: "devops-engineer"
+          estimated_time: "2 hours"
+          validation:
+            criteria:
+              - "Workflow file created for linting and formatting"
+              - "ESLint and Prettier run successfully in GitHub Actions"
+              - "Code quality issues reported as status checks"
+            commands:
+              - "git push origin feature/lint-workflow"
+        
+        - id: "DEVOPS-004.3"
+          status_marker: "[ ]"  # Not started
+          name: "Create Build Verification Workflow"
+          description: "Configure GitHub Actions workflow for verifying builds."
+          status: "not_started"
+          phase: 2
+          assigned_to: "devops-engineer"
+          estimated_time: "3 hours"
+          validation:
+            criteria:
+              - "Workflow file created for build verification"
+              - "Build runs successfully in GitHub Actions"
+              - "Build artifacts are generated and verified"
+            commands:
+              - "git push origin feature/build-workflow"

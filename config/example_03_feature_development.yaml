@@ -1,0 +1,690 @@
+# Feature Development Workflow - config/03_feature_development.yaml
+# This file documents the steps for implementing the core features of the project
+
+project_metadata:
+  name: "Sales Analytics Dashboard"
+  description: "A responsive web application with comprehensive data visualization capabilities for sales analytics"
+  project_type: "Minimum Viable Product (MVP)"
+  
+  # From user-provided project scope
+  problem_statement: "Sales managers lack real-time visibility into team performance and sales trends"
+  target_users: "Sales managers, executives, and sales representatives"
+  key_features:
+    - "Real-time sales data visualization with filtering capabilities"
+    - "Team performance comparisons and historical trend analysis"
+    - "Customizable dashboards for different user roles"
+    - "Automated sales forecasting using historical data"
+    - "Export capabilities for reports and presentations"
+  success_criteria:
+    - "Dashboard loads in under 2 seconds even with large datasets"
+    - "All visualizations update in real-time as data changes"
+    - "Users can create and save custom views of the data"
+    - "System handles at least 500 concurrent users"
+    - "Data is refreshed from source systems every 5 minutes"
+  
+  # From recruitment_prompt technology selections
+  primary_language: "TypeScript"
+  frontend_framework: "Next.js"
+  styling_framework: "Tailwind CSS"
+  data_visualization: "Apache ECharts"
+  backend_framework: "NestJS"
+  database: "PostgreSQL"
+  containerization: "Docker"
+  ci_cd_pipeline: "GitHub Actions"
+
+workflow:
+  phase: 3  # Feature Development
+  estimated_duration: "10 days"
+  
+  steps:
+    - id: "FRONT-002"
+      status_marker: "[ ]"  # Not started
+      name: "Dashboard Layout Implementation"
+      description: "Implement the main dashboard layout with responsive design, navigation, and user profile components. This serves as the container for all data visualization features."
+      status: "not_started"
+      error_details: ""
+      phase: 3
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The UI/UX Specialist has expertise in creating responsive layouts and implementing design systems with Tailwind CSS."
+      
+      assigned_to: "ui-ux-specialist"
+      estimated_time: "12 hours"
+      
+      technology_stack:
+        primary_language: "TypeScript"
+        frameworks: ["Next.js", "React"]
+        tools: ["Tailwind CSS", "React Testing Library"]
+      
+      prerequisites:
+        environment:
+          - "Next.js project must be initialized"
+          - "UI component library must be established"
+          - "Authentication system must be integrated with frontend"
+        knowledge:
+          - "Expertise in responsive layout design with Tailwind CSS"
+          - "Understanding of Next.js routing and layout patterns"
+          - "Familiarity with React context for state management"
+        resources:
+          - "Dashboard layout mockups"
+          - "Navigation structure documentation"
+        dependencies:
+          - "FRONT-001"  # UI Component Library Setup
+          - "BACK-001"  # Authentication System Implementation
+      
+      development_approach:
+        tdd_required: true
+        pair_programming: false
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "Layout must be fully responsive for all screen sizes"
+        - "Navigation must adapt to mobile and desktop views"
+        - "Theme configuration must be used from centralized config"
+        - "Accessibility standards must be followed"
+        - "Layout components must be reusable across pages"
+      
+      validation:
+        criteria:
+          - "Layout renders correctly on all target screen sizes"
+          - "Navigation works correctly for all user roles"
+          - "User profile and authentication state is displayed correctly"
+          - "All components pass accessibility tests"
+        commands:
+          - "docker-compose exec frontend npm run test:components:layout"
+          - "docker-compose exec frontend npm run test:e2e:navigation"
+          - "docker-compose exec frontend npm run test:a11y"
+          - "docker-compose exec frontend ls -la src/layouts"  # List layout files
+      
+      error_handling:
+        potential_errors:
+          - error: "Layout overflow issues"
+            detection: "Visual inspection shows content overflowing containers"
+            resolution: "Adjust container constraints and overflow properties"
+          - error: "Navigation state inconsistencies"
+            detection: "Active link highlighting doesn't match current route"
+            resolution: "Fix route matching logic in navigation components"
+          - error: "Authentication state not reflected in UI"
+            detection: "User profile doesn't update after login/logout"
+            resolution: "Verify auth context propagation and component re-rendering"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "FRONT-002.1"
+          status_marker: "[ ]"  # Not started
+          name: "Create Main Layout Component"
+          description: "Implement the main application layout with header, footer, and content areas."
+          status: "not_started"
+          phase: 3
+          assigned_to: "ui-ux-specialist"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Layout component renders with proper structure"
+              - "Layout is responsive across breakpoints"
+              - "Layout passes accessibility tests"
+            commands:
+              - "docker-compose exec frontend npm run test:components:layout:main"
+              - "docker-compose exec frontend cat src/layouts/MainLayout.tsx"  # Check main layout implementation
+        
+        - id: "FRONT-002.2"
+          status_marker: "[ ]"  # Not started
+          name: "Implement Navigation Components"
+          description: "Create navigation components for different user roles with proper routing."
+          status: "not_started"
+          phase: 3
+          assigned_to: "ui-ux-specialist"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Navigation renders correct items based on user role"
+              - "Active route is highlighted correctly"
+              - "Mobile navigation works with toggle functionality"
+            commands:
+              - "docker-compose exec frontend npm run test:components:navigation"
+              - "docker-compose exec frontend cat src/components/navigation/Navigation.tsx"  # Check navigation implementation
+        
+        - id: "FRONT-002.3"
+          status_marker: "[ ]"  # Not started
+          name: "Implement User Profile Components"
+          description: "Create user profile components showing authentication state and user information."
+          status: "not_started"
+          phase: 3
+          assigned_to: "ui-ux-specialist"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "User profile displays correct information when logged in"
+              - "Login/logout functionality works correctly"
+              - "User settings and preferences are accessible"
+            commands:
+              - "docker-compose exec frontend npm run test:components:profile"
+              - "docker-compose exec frontend cat src/components/profile/UserProfile.tsx"  # Check user profile implementation
+
+    - id: "FRONT-003"
+      status_marker: "[ ]"  # Not started
+      name: "Sales Dashboard Visualization Implementation"
+      description: "Implement the core sales dashboard with interactive charts, filters, and real-time data updates using Apache ECharts."
+      status: "not_started"
+      error_details: ""
+      phase: 3
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The Feature Developer specializing in frontend has expertise in data visualization and state management for interactive dashboards."
+      
+      assigned_to: "feature-developer"
+      estimated_time: "20 hours"
+      
+      technology_stack:
+        primary_language: "TypeScript"
+        frameworks: ["Next.js", "React"]
+        tools: ["Apache ECharts", "React Query", "Tailwind CSS"]
+      
+      prerequisites:
+        environment:
+          - "Dashboard layout must be implemented"
+          - "API endpoints for sales data must be available"
+          - "UI component library must include chart components"
+        knowledge:
+          - "Expertise in Apache ECharts configuration and customization"
+          - "Understanding of data fetching patterns with React Query"
+          - "Familiarity with interactive filtering and state management"
+        resources:
+          - "Dashboard visualization mockups"
+          - "Sales data structure documentation"
+          - "Chart configuration guidelines"
+        dependencies:
+          - "FRONT-002"  # Dashboard Layout Implementation
+          - "INT-001"  # API Layer Implementation
+      
+      development_approach:
+        tdd_required: true
+        pair_programming: true
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "All charts must use the centralized theme configuration"
+        - "Data fetching must use React Query for caching and updates"
+        - "Filters must be synchronized with URL parameters"
+        - "Charts must be responsive and adapt to container size"
+        - "Accessibility considerations must be implemented for charts"
+      
+      validation:
+        criteria:
+          - "Charts render correctly with sample data"
+          - "Filters update chart data as expected"
+          - "Data refreshes automatically at configured intervals"
+          - "Charts are responsive across screen sizes"
+          - "Interactions (hover, click) work as expected"
+        commands:
+          - "docker-compose exec frontend npm run test:components:charts"
+          - "docker-compose exec frontend npm run test:e2e:dashboard"
+          - "docker-compose exec frontend npm run test:performance:rendering"
+          - "docker-compose exec frontend ls -la src/components/charts"  # List chart components
+      
+      error_handling:
+        potential_errors:
+          - error: "Data fetching failures"
+            detection: "React Query error state triggered"
+            resolution: "Display appropriate error message and retry option"
+          - error: "Chart rendering issues"
+            detection: "ECharts throws error or renders blank"
+            resolution: "Verify data format and chart configuration"
+          - error: "Performance issues with large datasets"
+            detection: "Rendering time exceeds 500ms"
+            resolution: "Implement data aggregation or pagination strategies"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "FRONT-003.1"
+          status_marker: "[ ]"  # Not started
+          name: "Implement Sales Overview Charts"
+          description: "Create the main sales overview charts showing key metrics and trends."
+          status: "not_started"
+          phase: 3
+          assigned_to: "feature-developer"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Overview charts render with correct data"
+              - "Charts update when date range changes"
+              - "Key metrics are calculated and displayed correctly"
+            commands:
+              - "docker-compose exec frontend npm run test:components:charts:overview"
+              - "docker-compose exec frontend cat src/components/charts/SalesOverview.tsx"  # Check sales overview chart
+        
+        - id: "FRONT-003.2"
+          status_marker: "[ ]"  # Not started
+          name: "Implement Filtering and Controls"
+          description: "Create filter controls for time periods, product categories, regions, and other dimensions."
+          status: "not_started"
+          phase: 3
+          assigned_to: "feature-developer"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Filter controls render and function correctly"
+              - "URL parameters sync with filter state"
+              - "Filters affect all relevant charts"
+            commands:
+              - "docker-compose exec frontend npm run test:components:filters"
+              - "docker-compose exec frontend cat src/components/filters/FilterControls.tsx"  # Check filter controls
+        
+        - id: "FRONT-003.3"
+          status_marker: "[ ]"  # Not started
+          name: "Implement Real-time Updates"
+          description: "Implement automatic data refresh and real-time updates for dashboard charts."
+          status: "not_started"
+          phase: 3
+          assigned_to: "feature-developer"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Data refreshes at configured intervals"
+              - "Updates are applied smoothly without UI disruption"
+              - "User can pause/resume auto-updates"
+            commands:
+              - "docker-compose exec frontend npm run test:components:realtime"
+              - "docker-compose exec frontend cat src/hooks/useRealTimeData.ts"  # Check real-time data hook
+        
+        - id: "FRONT-003.4"
+          status_marker: "[ ]"  # Not started
+          name: "Implement Chart Interactions"
+          description: "Implement interactive features like drill-down, tooltips, and click actions."
+          status: "not_started"
+          phase: 3
+          assigned_to: "feature-developer"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Tooltips show detailed information on hover"
+              - "Click actions navigate to detailed views"
+              - "Drill-down functionality works for hierarchical data"
+            commands:
+              - "docker-compose exec frontend npm run test:components:interactions"
+              - "docker-compose exec frontend cat src/components/charts/ChartInteractions.tsx"  # Check chart interactions
+
+    - id: "BACK-002"
+      status_marker: "[ ]"  # Not started
+      name: "Sales Data Processing Service"
+      description: "Implement backend services for processing, aggregating, and analyzing sales data from various sources."
+      status: "not_started"
+      error_details: ""
+      phase: 3
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The Data Engineer has expertise in data processing pipelines and analytics algorithms."
+      
+      assigned_to: "data-engineer"
+      estimated_time: "16 hours"
+      
+      technology_stack:
+        primary_language: "TypeScript"
+        frameworks: ["NestJS"]
+        tools: ["TypeORM", "PostgreSQL"]
+      
+      prerequisites:
+        environment:
+          - "Database schema must be implemented"
+          - "API layer must be established"
+          - "Authentication and authorization must be in place"
+        knowledge:
+          - "Understanding of data aggregation techniques"
+          - "Expertise in SQL for complex analytics queries"
+          - "Familiarity with time-series data processing"
+        resources:
+          - "Sales data structure documentation"
+          - "Analytics requirements specification"
+        dependencies:
+          - "DB-001"  # Database Schema Design
+          - "INT-001"  # API Layer Implementation
+      
+      development_approach:
+        tdd_required: true
+        pair_programming: false
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "All processing logic must be in services, not controllers"
+        - "Complex queries must use query builders, not raw SQL"
+        - "Caching must be implemented for expensive operations"
+        - "Processing must be optimized for performance"
+        - "Results must be validated before returning to client"
+      
+      validation:
+        criteria:
+          - "Data processing services return correct results"
+          - "Performance meets requirements for large datasets"
+          - "Caching improves response time for repeated queries"
+          - "All edge cases are handled correctly"
+        commands:
+          - "docker-compose exec backend npm run test:services:data"
+          - "docker-compose exec backend npm run test:performance:queries"
+          - "docker-compose exec backend npm run test:integration:data"
+          - "docker-compose exec backend ls -la src/services/data"  # List data service files
+      
+      error_handling:
+        potential_errors:
+          - error: "Data source unavailability"
+            detection: "Database connection errors"
+            resolution: "Implement retry logic with exponential backoff"
+          - error: "Invalid data format"
+            detection: "Data validation failures"
+            resolution: "Log detailed error and return appropriate error response"
+          - error: "Performance degradation with large datasets"
+            detection: "Query execution time exceeds thresholds"
+            resolution: "Optimize queries and implement pagination/streaming"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "BACK-002.1"
+          status_marker: "[ ]"  # Not started
+          name: "Implement Data Aggregation Services"
+          description: "Create services for aggregating sales data across various dimensions."
+          status: "not_started"
+          phase: 3
+          assigned_to: "data-engineer"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Aggregation services return correct results"
+              - "Performance is optimized for large datasets"
+              - "Results are properly cached"
+            commands:
+              - "docker-compose exec backend npm run test:services:aggregation"
+              - "docker-compose exec backend cat src/services/data/aggregation.service.ts"  # Check aggregation service
+        
+        - id: "BACK-002.2"
+          status_marker: "[ ]"  # Not started
+          name: "Implement Time-Series Analysis"
+          description: "Create services for analyzing sales trends over time periods."
+          status: "not_started"
+          phase: 3
+          assigned_to: "data-engineer"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Time-series analysis returns correct trends"
+              - "Different time periods (daily, weekly, monthly) work correctly"
+              - "Seasonal adjustments are applied correctly"
+            commands:
+              - "docker-compose exec backend npm run test:services:timeseries"
+              - "docker-compose exec backend cat src/services/data/timeseries.service.ts"  # Check time-series service
+        
+        - id: "BACK-002.3"
+          status_marker: "[ ]"  # Not started
+          name: "Implement Forecasting Service"
+          description: "Create service for generating sales forecasts based on historical data."
+          status: "not_started"
+          phase: 3
+          assigned_to: "data-engineer"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Forecasting algorithm produces reasonable predictions"
+              - "Confidence intervals are calculated correctly"
+              - "Performance is acceptable for interactive use"
+            commands:
+              - "docker-compose exec backend npm run test:services:forecasting"
+              - "docker-compose exec backend cat src/services/data/forecasting.service.ts"  # Check forecasting service
+
+    - id: "FRONT-004"
+      status_marker: "[ ]"  # Not started
+      name: "Team Performance Comparison Feature"
+      description: "Implement the team performance comparison feature allowing managers to compare sales teams across various metrics."
+      status: "not_started"
+      error_details: ""
+      phase: 3
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The Feature Developer specializing in frontend has expertise in comparative data visualization and interactive features."
+      
+      assigned_to: "feature-developer"
+      estimated_time: "14 hours"
+      
+      technology_stack:
+        primary_language: "TypeScript"
+        frameworks: ["Next.js", "React"]
+        tools: ["Apache ECharts", "React Query", "Tailwind CSS"]
+      
+      prerequisites:
+        environment:
+          - "Dashboard layout must be implemented"
+          - "API endpoints for team data must be available"
+          - "UI component library must include comparison chart components"
+        knowledge:
+          - "Expertise in comparative data visualization techniques"
+          - "Understanding of team performance metrics"
+          - "Familiarity with interactive filtering for comparisons"
+        resources:
+          - "Team comparison feature mockups"
+          - "Team data structure documentation"
+        dependencies:
+          - "FRONT-003"  # Sales Dashboard Visualization Implementation
+          - "BACK-002"  # Sales Data Processing Service
+      
+      development_approach:
+        tdd_required: true
+        pair_programming: false
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "Comparison views must be consistent with overall dashboard design"
+        - "User must be able to select teams and metrics for comparison"
+        - "Visualizations must clearly highlight differences between teams"
+        - "Performance data must be normalized for fair comparison"
+        - "Feature must be accessible to users with visual impairments"
+      
+      validation:
+        criteria:
+          - "Team selection controls work correctly"
+          - "Comparison charts render with correct data"
+          - "Metrics can be changed dynamically"
+          - "Visual indicators highlight significant differences"
+        commands:
+          - "docker-compose exec frontend npm run test:components:comparison"
+          - "docker-compose exec frontend npm run test:e2e:team-comparison"
+          - "docker-compose exec frontend npm run test:a11y:comparison"
+          - "docker-compose exec frontend ls -la src/components/comparison"  # List comparison components
+      
+      error_handling:
+        potential_errors:
+          - error: "Insufficient data for comparison"
+            detection: "Empty or sparse datasets for selected teams"
+            resolution: "Display appropriate message and suggest alternative selections"
+          - error: "Incomparable metrics selected"
+            detection: "Metrics with different scales or units"
+            resolution: "Normalize data or provide warning about comparison limitations"
+          - error: "Too many teams selected for clear visualization"
+            detection: "User selects more than the recommended number of teams"
+            resolution: "Limit selections or adapt visualization for larger comparisons"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "FRONT-004.1"
+          status_marker: "[ ]"  # Not started
+          name: "Implement Team Selection Interface"
+          description: "Create interface for selecting teams and metrics for comparison."
+          status: "not_started"
+          phase: 3
+          assigned_to: "feature-developer"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Team selection controls render and function correctly"
+              - "Metric selection controls allow changing comparison basis"
+              - "Selections are preserved in URL parameters"
+            commands:
+              - "npm run test:components:team-selection"
+        
+        - id: "FRONT-004.2"
+          status_marker: "[ ]"  # Not started
+          name: "Implement Comparison Visualizations"
+          description: "Create visualizations that effectively show differences between teams."
+          status: "not_started"
+          phase: 3
+          assigned_to: "feature-developer"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Comparison charts render with correct data"
+              - "Visual indicators highlight significant differences"
+              - "Charts adapt to different numbers of teams"
+            commands:
+              - "npm run test:components:comparison-charts"
+        
+        - id: "FRONT-004.3"
+          status_marker: "[ ]"  # Not started
+          name: "Implement Detailed Comparison View"
+          description: "Create detailed view showing side-by-side metrics for selected teams."
+          status: "not_started"
+          phase: 3
+          assigned_to: "feature-developer"
+          estimated_time: "4 hours"
+          validation:
+            criteria:
+              - "Detailed view shows comprehensive metrics"
+              - "View allows sorting and filtering of metrics"
+              - "Export functionality works for comparison data"
+            commands:
+              - "npm run test:components:detailed-comparison"
+
+    - id: "FRONT-005"
+      status_marker: "[ ]"  # Not started
+      name: "Custom Dashboard Feature"
+      description: "Implement the custom dashboard feature allowing users to create and save personalized dashboard views."
+      status: "not_started"
+      error_details: ""
+      phase: 3
+      
+      orchestrator:
+        action: "delegate"
+        rationale: "The UI/UX Specialist has expertise in creating customizable interfaces and user preference management."
+      
+      assigned_to: "ui-ux-specialist"
+      estimated_time: "18 hours"
+      
+      technology_stack:
+        primary_language: "TypeScript"
+        frameworks: ["Next.js", "React"]
+        tools: ["React DnD", "Tailwind CSS", "React Query"]
+      
+      prerequisites:
+        environment:
+          - "Dashboard components must be implemented"
+          - "API endpoints for saving user preferences must be available"
+          - "Authentication system must be in place"
+        knowledge:
+          - "Expertise in drag-and-drop interfaces"
+          - "Understanding of layout persistence strategies"
+          - "Familiarity with user preference management"
+        resources:
+          - "Custom dashboard feature mockups"
+          - "User preference data structure documentation"
+        dependencies:
+          - "FRONT-003"  # Sales Dashboard Visualization Implementation
+          - "BACK-001"  # Authentication System Implementation
+      
+      development_approach:
+        tdd_required: true
+        pair_programming: true
+        documentation_update_required: true
+      
+      adherence_requirements:
+        - "Dashboard customization must use drag-and-drop for intuitive UX"
+        - "User preferences must be saved to backend and persisted"
+        - "Layout must be responsive even with custom arrangements"
+        - "Default layouts must be provided for new users"
+        - "Users must be able to share custom dashboards with others"
+      
+      validation:
+        criteria:
+          - "Drag-and-drop functionality works for arranging widgets"
+          - "Custom layouts are saved and restored correctly"
+          - "Responsive behavior maintains integrity of custom layouts"
+          - "Sharing functionality works between users"
+        commands:
+          - "npm run test:components:custom-dashboard"
+          - "npm run test:e2e:dashboard-customization"
+          - "npm run test:integration:preferences"
+      
+      error_handling:
+        potential_errors:
+          - error: "Failed to save user preferences"
+            detection: "API error when saving dashboard configuration"
+            resolution: "Implement local storage fallback and retry mechanism"
+          - error: "Invalid layout configuration"
+            detection: "Layout cannot be rendered due to conflicts"
+            resolution: "Reset to default layout and notify user"
+          - error: "Performance issues with many widgets"
+            detection: "Rendering time exceeds thresholds"
+            resolution: "Implement lazy loading and optimize widget rendering"
+      
+      git_operations:
+        required: true
+        confirmation_required: true
+      
+      substeps:
+        - id: "FRONT-005.1"
+          status_marker: "[ ]"  # Not started
+          name: "Implement Dashboard Grid System"
+          description: "Create responsive grid system for arranging dashboard widgets."
+          status: "not_started"
+          phase: 3
+          assigned_to: "ui-ux-specialist"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Grid system renders correctly at all breakpoints"
+              - "Grid cells can contain different widget types"
+              - "Layout adjusts automatically for different screen sizes"
+            commands:
+              - "npm run test:components:dashboard-grid"
+        
+        - id: "FRONT-005.2"
+          status_marker: "[ ]"  # Not started
+          name: "Implement Drag-and-Drop Functionality"
+          description: "Create drag-and-drop interface for arranging dashboard widgets."
+          status: "not_started"
+          phase: 3
+          assigned_to: "ui-ux-specialist"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Widgets can be dragged and dropped to rearrange"
+              - "Widgets can be resized within the grid"
+              - "Layout updates in real-time during drag operations"
+            commands:
+              - "npm run test:components:drag-drop"
+        
+        - id: "FRONT-005.3"
+          status_marker: "[ ]"  # Not started
+          name: "Implement Dashboard Persistence"
+          description: "Create functionality to save and restore custom dashboard layouts."
+          status: "not_started"
+          phase: 3
+          assigned_to: "ui-ux-specialist"
+          estimated_time: "6 hours"
+          validation:
+            criteria:
+              - "Dashboard configurations are saved to user preferences"
+              - "Layouts are restored correctly on page load"
+              - "Multiple saved dashboards can be managed"
+            commands:
+              - "npm run test:integration:dashboard-persistence"
