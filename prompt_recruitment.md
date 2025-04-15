@@ -408,6 +408,7 @@ Each agent must include a unique set of `tags` and a concise `description`:
 **CRITICAL FORMATTING REQUIREMENTS:**
 
 The `.roomodes` file MUST follow this EXACT formatting structure:
+**IMPORTANT** Absolutely NO COMMENTS in this json file are allowed!
 
 ```json
 {
