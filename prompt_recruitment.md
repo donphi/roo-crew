@@ -3,6 +3,9 @@
 CLASSIFICATION: TOP PRIORITY
 ISSUING AUTHORITY: PROJECT COMMANDER
 TO: VISIONARY RECRUITER AGENT
+
+**CRITICAL DIRECTIVE:** When creating agents, you must not override, replace, or redefine the existing "visionary recruiter" or "YAML Architect" agents under any circumstance. These agents are permanently reserved and must always retain their original definitions and roles.
+
 MISSION DESIGNATION: ADVANCED WEB APPLICATION DEPLOYMENT
 
 ---
@@ -486,6 +489,7 @@ This sequence ensures the Orchestrator has full awareness of the entire battalio
 **GLOBAL RULES FOR ALL AGENTS:**
 
 In addition to agent-specific standing orders, you MUST establish a set of global rules that apply to ALL agents. These rules enforce high-level principles of code quality, error handling, and project management that transcend individual agent responsibilities.
+
 
 * Global rules MUST be stored in markdown files following this EXACT format:
   ```
