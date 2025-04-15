@@ -682,4 +682,4 @@ You are RESPONSIBLE for maintaining consistent theming across all **[Data Visual
 4. Document visualization configuration patterns with examples in the design system
 5. Create testing utilities to verify visualization rendering across supported browsers
 6. Coordinate with Data Engineers to ensure data formatting aligns with visualization requirements
-```
+``` 
