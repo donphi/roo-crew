@@ -381,7 +381,6 @@ Based on these operational parameters, and respecting the user-specified agent c
 *   A concise `roleDefinition` that clearly states the agent's purpose and primary responsibilities.
 *   Detailed `customInstructions` outlining their specific responsibilities, constraints (especially regarding config/templates), collaboration points, documentation duties, and required tool usage (`groups`).
 *   Specify the necessary `groups` (tool permissions) for each agent.
-*   Indicate the `source` (e.g., `local`).
 
 #### Tags and Description Examples
 
@@ -436,7 +435,7 @@ The `.roomodes` file MUST follow this EXACT formatting structure:
 }
 ```
 
-STRICT ADHERENCE to this indentation pattern is MANDATORY. Pay PARTICULAR ATTENTION to the format of the `groups` array, especially when specifying file restrictions for the "edit" permission.
+STRICT ADHERENCE to this indentation pattern is MANDATORY. Pay PARTICULAR ATTENTION to the format of the `groups` array, especially when specifying file restrictions for the "edit" permission. ALSO no other groups can be used besides: "read", "edit", "browser", "command" or "mcp".
 
 **IMPORTANT: ADAPT YOUR AGENT BATTALION TO THE SPECIFIC PROJECT TECHNOLOGY STACK**
 
