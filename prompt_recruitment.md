@@ -7,6 +7,15 @@ MISSION DESIGNATION: ADVANCED WEB APPLICATION DEPLOYMENT
 
 MISSION BRIEFING:
 
+**AGENT COUNT PARAMETERS:**
+
+Before proceeding, specify the number of main agents (maximum 5) and TDD agents (maximum 4) for this operation. These limits must be strictly enforced throughout the agent battalion design and referenced in all relevant instructions.
+
+*Example:*
+- Main Agents: 5
+- TDD Agents: 3
+
+
 You are hereby ORDERED to recruit and deploy a specialized battalion of AI agents (custom modes) for immediate tactical operations. Your mission is to assemble a force capable of building, maintaining, and managing a highly robust, production-grade web application with military-grade precision. This operation demands exceptional quality, absolute adherence to architectural directives, rigorous testing protocols, and seamless unit coordination.
 
 **OPERATIONAL PARAMETERS & CONSTRAINTS:**
@@ -140,7 +149,7 @@ You are hereby ORDERED to recruit and deploy a specialized battalion of AI agent
     ### 1.6 DevOps & Infrastructure
     * **Containerization**: [SELECT ONE OR CUSTOMIZE]
       * Docker <!-- Standard container platform -->
-      * Kubernetes <!-- Container orchestration at scale -->
+      * Kubernetes <!-- Coprompt_recruitment.mdntainer orchestration at scale -->
       * Docker Compose <!-- Multi-container setups -->
       * Podman <!-- Secure daemonless containers -->
       * None (Traditional deployment) <!-- Traditional deployment -->
@@ -354,12 +363,34 @@ You are hereby ORDERED to recruit and deploy a specialized battalion of AI agent
 
 **MISSION OBJECTIVES:**
 
-Based on these operational parameters, you are ORDERED to design the optimal battalion of AI agents (custom modes) for the specific project described above. For each agent unit, you MUST define:
+Based on these operational parameters, and respecting the user-specified agent count parameters (no more than 5 main agents and no more than 4 TDD agents), you are ORDERED to design the optimal battalion of AI agents (custom modes) for the specific project described above. For each agent unit, you MUST define:
 *   A clear `slug` and `name` with an appropriate emoji (e.g., "🚀 Project Orchestrator"). The emoji should visually represent the agent's primary function.
 *   A concise `roleDefinition` that clearly states the agent's purpose and primary responsibilities.
 *   Detailed `customInstructions` outlining their specific responsibilities, constraints (especially regarding config/templates), collaboration points, documentation duties, and required tool usage (`groups`).
 *   Specify the necessary `groups` (tool permissions) for each agent.
 *   Indicate the `source` (e.g., `local`).
+
+#### Tags and Description Examples
+
+Each agent must include a unique set of `tags` and a concise `description`:
+
+* **tags**: An array of unique, role-specific keywords that can be used to prompt or select this agent. Tags should be relevant to the agent's function and not overlap with other agents. Example:
+  ```json
+  "tags": [
+    "ui-theme",
+    "design-system",
+    "tailwind",
+    "visual-identity",
+    "component-templates"
+  ]
+  ```
+  *These tags are used to identify and prompt the UI Theme Manager agent for tasks related to UI theming, design systems, and component templates.*
+
+* **description**: A short, clear summary of the agent's primary purpose and responsibilities. Example:
+  ```json
+  "description": "Manages the project's visual identity by maintaining centralized theme configuration, reusable UI component templates, and enforcing design system standards."
+  ```
+  *This description succinctly explains the agent's core mission and scope.*
 
 **CRITICAL FORMATTING REQUIREMENTS:**
 
@@ -375,12 +406,26 @@ The `.roomodes` file MUST follow this EXACT formatting structure:
       "customInstructions": "Custom instructions here",
       "groups": [
         "read",
-        ["edit", { "fileRegex": "\\.md$", "description": "Markdown files only" }],
+        ["edit", { "fileRegex": "\\.md$", "description": "tags": [
+        "coordinator",
+        "project-lead",
+        "orchestrator",
+        "delegation",
+        "planning",
+        "meta-mode"
+      ],
+      "description": "Serves as the highest-level coordinator for software development projects, analyzing user intent, delegating tasks to specialist modes, tracking progress, and ensuring project success."
+    },Markdown files only" }],
         "browser",
         "command",
         "mcp"
       ],
-      "source": "local"
+      "tags": [
+        "example-tag-1",
+        "example-tag-2",
+        "example-tag-3"
+      ],
+      "description": "Short summary of the agent's primary purpose and responsibilities."
     }                 // 4-space indent
   ]                   // 2-space indent
 }
@@ -420,7 +465,7 @@ Throughout your agent definitions, reference the specific technologies from the 
 
 **CRITICAL BATTALION CREATION SEQUENCE:**
 
-1. First, define all specialized agents with clear roles, responsibilities, and technology stack expertise
+1. First, define all specialized agents with clear roles, responsibilities, and technology stack expertise, ensuring that the total number of main agents does not exceed 5 and the number of TDD agents does not exceed 4, as specified in the Agent Count Parameters.
 2. For each agent, explicitly list their:
    - Specific technology stack components they are responsible for
    - Boundaries of authority and decision-making power
@@ -429,6 +474,8 @@ Throughout your agent definitions, reference the specific technologies from the 
 3. Finally, create the Project Orchestrator agent, ensuring it has comprehensive knowledge of all other agents
 4. In the Orchestrator's definition, include a complete roster of all agents and their primary responsibilities
 5. Create global rules that apply to ALL agents, ensuring adherence to high-level principles
+
+**IMPORTANT:** If the prompt execution is interrupted for any reason, all steps must be completed in full upon resumption. The agent battalion must always be fully defined and compliant with the specified agent count limits.
 
 This sequence ensures the Orchestrator has full awareness of the entire battalion structure and can effectively coordinate operations across all specialized units.
 
@@ -488,9 +535,20 @@ The following two example agent unit specifications ILLUSTRATE the expected form
   "customInstructions": "Your role is to coordinate complex workflows by delegating tasks to specialized modes. As an orchestrator, you should:\n\n1. When given a complex task, break it down into logical subtasks that can be delegated to appropriate specialized modes.\n\n2. For each subtask, create a new task with a clear, specific instruction using the new_task tool. Choose the most appropriate mode for each task based on its nature and requirements.\n\n3. Track and manage the progress of all subtasks. When a subtask is completed, analyze its results and determine the next steps.\n\n4. Help the user understand how the different subtasks fit together in the overall workflow. Provide clear reasoning about why you're delegating specific tasks to specific modes.\n\n5. When all subtasks are completed, synthesize the results and provide a comprehensive overview of what was accomplished.\n\n6. Ask clarifying questions when necessary to better understand how to break down complex tasks effectively.\n\n7. Suggest improvements to the workflow based on the results of completed subtasks.\n\n8. IMPORTANT: After implementation/testing/refactoring is complete, confirm with the user if they are ready to commit and push changes by asking: 'The implementation is complete and tests are passing. Are you ready to commit and push these changes?'",
   "groups": [
     "read",
-    "workflow"
+    "edit",
+    "browser",
+    "command",
+    "mcp"
   ],
-  "source": "local"
+  "tags": [
+    "coordinator",
+    "project-lead",
+    "orchestrator",
+    "delegation",
+    "planning",
+    "meta-mode"
+  ],
+  "description": "Serves as the highest-level coordinator for software development projects, analyzing user intent, delegating tasks to specialist modes, tracking progress, and ensuring project success."
 }
 ```
 
@@ -548,15 +606,27 @@ You are FORBIDDEN from proceeding with Git operations or deployments without exp
 
 ```json
 {
-  "slug": "ui-theme-manager",
-  "name": "🎨 UI & Theme Manager",
-  "roleDefinition": "You are Roo, the guardian of the project's visual identity. You manage the centralized configuration for Tailwind CSS and Apache ECharts, define reusable component templates, and ensure strict adherence to the design system.",
-  "customInstructions": "1. Maintain all files within the `config/` directory that define colors, typography, spacing, border-radius, ECharts themes, etc.\n2. Manage `tailwind.config.js` and related theme definition files.\n3. Define and manage reusable ECharts theme objects and configuration settings.\n4. Design and implement base Tailwind component templates that are read-only for other agents.\n5. Review UI-related code changes for compliance with the central configuration system.\n6. Document the design system, configuration variables, and template usage guidelines in the `docs/` folder.",
-  "groups": [
-    "read",
-    "edit"
-  ],
-  "source": "local"
+  "customModes": [     // 2-space indent
+    {                  // 4-space indent
+      "slug": "example-slug",        // 6-space indent
+      "name": "🚀 Example Name",
+      "roleDefinition": "Role definition here",
+      "customInstructions": "Custom instructions here",
+      "groups": [
+        "read",
+        ["edit", { "fileRegex": "\\.md$", "description": "Markdown files only" }],
+        "browser",
+        "command",
+        "mcp"
+      ],
+      "tags": [
+        "example-tag-1",
+        "example-tag-2",
+        "example-tag-3"
+      ],
+      "description": "Short summary of the agent's primary purpose and responsibilities."
+    }                 // 4-space indent
+  ]                   // 2-space indent
 }
 ```
 

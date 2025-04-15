@@ -41,7 +41,7 @@ Be as detailed as possible about the end state of the project. The more specific
 
 ### 1.5 MISSION BRIEFING
 
-You are ORDERED to create a comprehensive set of YAML workflow documents that will serve as the definitive blueprint for executing the project defined in the PROJECT SCOPE AND OBJECTIVES section above and the technology stack defined in the `.recruitment_prompt` file. These documents must capture every single step, decision point, validation checkpoint, and error handling procedure required to successfully implement the project from inception to deployment.
+You are ORDERED to create a comprehensive set of YAML workflow documents that will serve as the definitive blueprint for executing the project defined in the PROJECT SCOPE AND OBJECTIVES section above and the technology stack defined in the `prompt_recruitment.md` file. These documents must capture every single step, decision point, validation checkpoint, and error handling procedure required to successfully implement the project from inception to deployment.
 
 ## SECTION 2: WORKFLOW ORGANIZATION
 --------------------------------------------------------------------------------------------------
@@ -109,7 +109,7 @@ Within each technology module, organize steps according to these sequential phas
 
 ### 2.3 OPERATIONAL PARAMETERS
 
-1. **Technology Stack Analysis**: You MUST first analyze the `.recruitment_prompt` file to extract the complete technology stack, architectural requirements, and operational protocols specific to this project.
+1. **Technology Stack Analysis**: You MUST first analyze the `prompt_recruitment.md` file to extract the complete technology stack, architectural requirements, and operational protocols specific to this project.
 
 2. **Agent Integration**: You MUST incorporate ALL custom agent modes created by the Visionary Recruiter. You are FORBIDDEN from using the default "code", "architect", "ask", or "debug" modes. Only custom modes defined in the `.roomodes` file are authorized for inclusion in the workflow.
 
@@ -146,7 +146,7 @@ steps:
     estimated_time: "X hours/minutes"
     
     technology_stack:
-      # List all specific technologies from .recruitment_prompt relevant to this step
+      # List all specific technologies from prompt_recruitment.md relevant to this step
       primary_language: "Selected language from recruitment prompt"
       frameworks: ["Framework1", "Framework2"]
       tools: ["Tool1", "Tool2"]
@@ -163,12 +163,12 @@ steps:
         - "step-id-of-prerequisite-step"
     
     development_approach:
-      tdd_required: true/false  # Based on .recruitment_prompt
+      tdd_required: true/false  # Based on prompt_recruitment.md
       pair_programming: true/false  # For complex features
       documentation_update_required: true/false
     
     adherence_requirements:
-      - "Specific architectural principles from .recruitment_prompt that must be followed"
+      - "Specific architectural principles from prompt_recruitment.md that must be followed"
       - "Specific code organization requirements"
       - "Specific design patterns to implement"
     
@@ -204,7 +204,7 @@ The status_marker field is CRITICAL as it provides a clear visual indicator of s
 
 1. **Absolute Precision**: Every step must be documented with such precision that it could be executed by someone with minimal technical knowledge or by an automated system.
 
-2. **Technology Specificity**: All steps must reference the EXACT technologies specified in the `.recruitment_prompt` file. Generic instructions are FORBIDDEN.
+2. **Technology Specificity**: All steps must reference the EXACT technologies specified in the `prompt_recruitment.md` file. Generic instructions are FORBIDDEN.
 
 3. **Error Anticipation**: Every step must include comprehensive error handling with specific detection methods and resolution procedures.
 
@@ -224,7 +224,7 @@ FAILURE TO PROVIDE THIS LEVEL OF DETAIL AND PRECISION WILL RESULT IN MISSION FAI
 
 To create these workflow documents, you must:
 
-1. Analyze the `.recruitment_prompt` file to understand the project requirements, technology stack, and architectural directives
+1. Analyze the `prompt_recruitment.md` file to understand the project requirements, technology stack, and architectural directives
 2. Identify all custom agent modes from the `.roomodes` file
 3. Create the workflow YAML files with the structure specified above
 4. Ensure all steps are assigned to appropriate specialized agents
