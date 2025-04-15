@@ -7,6 +7,10 @@ MISSION DESIGNATION: ADVANCED WEB APPLICATION DEPLOYMENT
 
 MISSION BRIEFING:
 
+ABSOLUTE COHESION DIRECTIVE:
+
+All agent messages and custom instructions must be meticulously aligned, with no rule or directive permitted to be out of scope or in conflict with any other agent's rules. This cohesion is mandatory and overrides all other considerations. Any deviation or contradiction is strictly prohibited.
+
 **AGENT COUNT PARAMETERS:**
 
 Before proceeding, specify the number of main agents (maximum 5) and TDD agents (maximum 4) for this operation. These limits must be strictly enforced throughout the agent battalion design and referenced in all relevant instructions.
